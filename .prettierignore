@@ -1,0 +1,6 @@
+package-lock.json
+*.pug
+*.png
+./public/img
+./views
+Makefile

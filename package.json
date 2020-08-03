@@ -1,0 +1,37 @@
+{
+    "name": "you-speak-yoda",
+    "version": "1.0.0",
+    "engines": {
+        "node": "14.x"
+    },
+    "type": "module",
+    "scripts": {
+        "start": "node ./src/app",
+        "lint": "eslint --fix --quiet",
+        "format": "prettier --write --loglevel error ."
+    },
+    "nodemonConfig": {
+        "ext": "*.js,*.css,*.nunjucks",
+        "events": {
+            "restart": "npm run lint && npm run format"
+        }
+    },
+    "dependencies": {
+        "axios": "^0.19.2",
+        "colors": "^1.4.0",
+        "cookie-parser": "~1.4.4",
+        "debug": "~2.6.9",
+        "dotenv": "^8.2.0",
+        "express": "~4.16.1",
+        "http-errors": "~1.6.3",
+        "morgan": "~1.9.1",
+        "nunjucks": "^3.2.2"
+    },
+    "devDependencies": {
+        "eslint": "^7.5.0",
+        "eslint-config-airbnb-base": "^14.2.0",
+        "eslint-plugin-import": "^2.22.0",
+        "nodemon": "^2.0.4",
+        "prettier": "2.0.5"
+    }
+}

@@ -1,0 +1,44 @@
+{% extends "base.nunjucks" %}
+
+{% block content %}
+<div id="stars"></div>
+
+<div class="you-speak-yoda container">
+  <div class="you-speak-yoda-inner row justify-content-center align-items-center">
+    <div class="container text-center">
+
+      <h1 class="h1 mb-4 font-weight-normal">
+        <a class="d-block" href="/">
+          <img class="yoda-text" src="/img/yoda-text.svg" />
+        <span class="sr-only">You speak Yoda</span>
+        </a>
+      </h1>      
+
+      <img class="yoda-img mb-4" src="/img/yoda.png" alt="Yoda">
+
+      <p class="translation d-block h5 mb-4 font-weight-normal visible font-italic">&nbsp;</p>
+
+      <form id="translate-form" class="translate-form">
+  
+        <div class="form-row">
+          <div class="col-sm-8 col-md-9 mt-2">
+            <label for="input" class="sr-only">Text to translate</label>
+            <input name="text" type="text" class="form-control rounded translate-text"
+              placeholder="Text to translate" required autofocus
+              value="{% if text %}{{ text }}{% elif translationSuggestion %}{{ translationSuggestion }}{% endif %}" />
+          </div>
+          <div class="col-sm-4 col-md-3 mt-2">
+            <button class="btn btn-md btn-primary form-control text-uppercase" type="submit">Translate</button>
+          </div>
+        </div>
+      </form>
+
+      <p class="mt-5">
+        <small>Built using the <a class="doppler-link text-white" href="https://doppler.com">Doppler Universal Secrets Manager</a></small>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="/js/index.js"></script>
+{% endblock %}
