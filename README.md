@@ -53,14 +53,14 @@ doppler login
 1. In a terminal, cd into the `you-speak-yoda` directory, then run:
 
 ```sh
-# Configure Doppler to fetch the `yodaspeak` secrets from the `dev` environment
+# Configure Doppler to fetch the `yodaspeak` secrets from the `dev` config
 doppler enclave setup
 ```
 
 To check that the Doppler CLI can access the project and retrieve its secrets, run:
 
 ```sh
-doppler run env | grep YODA
+doppler run -- printenv YODA
 ```
 
 If secrets are displayed, Doppler is good to go! Now let's run the server.
