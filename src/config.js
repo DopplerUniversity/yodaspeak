@@ -12,9 +12,12 @@ if (process.env.DOPPLER_ENCLAVE_PROJECT) {
 }
 
 const config = Object.freeze({
+    LOGGING: process.env.LOGGING,
     HOSTNAME: process.env.HOSTNAME,
     PORT: process.env.PORT,
-    LOGGING: process.env.LOGGING,
+    TLS_CERT: process.env.TLS_CERT,
+    TLS_KEY: process.env.TLS_KEY,
+    TLS_PORT: process.env.TLS_PORT,
     TRANSLATION_SUGGESTION: process.env.TRANSLATION_SUGGESTION,
     YODA_TRANSLATE_API_ENDPOINT: process.env.YODA_TRANSLATE_API_ENDPOINT,
     YODA_TRANSLATE_API_KEY: process.env.YODA_TRANSLATE_API_KEY,
