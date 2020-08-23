@@ -4,20 +4,34 @@ HEROKU_TEAM=dagobah
 HEROKU_APP_STAGING=you-speak-yoda-staging
 HEROKU_APP_PRODUCTION=you-speak-yoda-production
 
-## Development
 
-dotenv-server:
-	npm start
+## Dev server
 
-doppler-server:
+server:
 	doppler run -- npm start
 
 dev-server:
 	doppler run -- nodemon npm start
 
+
+# Prod server - persistent background process without process manager or Docker
+# Uses sudo to bind to port 80 and/or 443
+
+prod-server-up:
+	@sudo nohup doppler run -- npm start >/dev/null 2>&1 &
+
+prod-server-down:
+	-@sudo kill $(shell pgrep node) >/dev/null 2>&1
+
+prod-server-restart: prod-server-down prod-server-up
+
+
+### Utilities
+
 code-clean:
 	npm run format
 	npm run lint
+
 
 ### Heroku
 
