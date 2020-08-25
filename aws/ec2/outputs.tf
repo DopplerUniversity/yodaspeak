@@ -1,12 +1,16 @@
 output "instance_id" {
   value = "${aws_instance.this.id}"
 }
-output "server_url" {
+output "aws_instance_url" {
   value = "${format("https://%s/", aws_instance.this.public_dns)}"
 }
 
-output "server_ip" {
+output "aws_instance_ip" {
   value = "${aws_instance.this.public_ip}"
+}
+
+output "app_url" {
+  value = "https://${cloudflare_record.this.hostname}/"
 }
 
 output "ssh" {

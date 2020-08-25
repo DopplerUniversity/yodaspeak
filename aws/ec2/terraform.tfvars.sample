@@ -2,11 +2,22 @@
 # REQUIRED #
 ##############
 
+# Git
+git_sha = ""
+
 # AWS
 vpc_id = ""
 subnet_id = ""
 region=""
 key_name = ""
+
+# Cloudflare
+cloudflare_email = ""
+cloudflare_api_key = ""
+cloudflare_zone_id = ""
+
+# Doppler
+doppler_service_token = ""
 
 ############
 # OPTIONAL #

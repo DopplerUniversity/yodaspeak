@@ -5,6 +5,7 @@ export PATH=$PATH:/usr/local/bin
 export PUBLIC_HOSTNAME=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
 export IP_ADDRESS=$(echo $(hostname -I) | awk '{print $1;}')
 export DOPPLER_TOKEN="${service_token}"
+export GIT_SHA="${git_sha}"
 
 # Add Doppler's yum repo
 wget https://bintray.com/dopplerhq/doppler-rpm/rpm -O /etc/yum.repos.d/bintray-dopplerhq-doppler.repo

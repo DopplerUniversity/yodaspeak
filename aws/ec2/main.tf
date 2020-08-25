@@ -1,5 +1,13 @@
 terraform {
   required_version = ">=0.13.0"
+
+  required_providers {
+    aws = {}
+    cloudflare = {
+      source = "terraform-providers/cloudflare"
+    }
+  }
+
   backend "s3" {
     bucket = "you-speak-yoda-terraform"
     key    = "yodaspeak"
@@ -9,6 +17,11 @@ terraform {
 
 provider "aws" {
   region = var.region
+}
+
+provider "cloudflare" {
+  email   = var.cloudflare_email
+  api_key = var.cloudflare_api_key
 }
 
 # Get the latest Amazon Linux 2 AMI
@@ -123,9 +136,21 @@ resource "aws_instance" "this" {
   iam_instance_profile = aws_iam_instance_profile.this.name
 
   # user_data = file("${path.module}/resources/amazon-linux2.sh")
-  user_data = templatefile("${path.module}/resources/amazon-linux2.sh", { service_token = "${var.doppler_service_token}" })
+  user_data = templatefile("${path.module}/resources/amazon-linux2.sh", { service_token = "${var.doppler_service_token}", git_sha = "${var.git_sha}" })
 
   tags = {
     Name = "${var.app_name}"
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "cloudflare_record" "this" {
+  zone_id = var.cloudflare_zone_id
+  name    = "aws"
+  value   = aws_instance.this.public_ip
+  type    = "A"
+  proxied = true
 }
