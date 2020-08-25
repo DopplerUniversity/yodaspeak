@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# usage: ` TF_VAR_doppler_service_token=dp.xxxx` ./bin/deploy.sh
+
+if [ -z ${DOPPLER_SERVICE_TOKEN+x} ]; then echo '[error]: Please set the DOPPLER_SERVICE_TOKEN environment variable.'; exit 1; fi
+
+echo '[info]: Initializing Terraform and validating input'
+terraform init -upgrade
+terraform validate
+terraform plan -var-file terraform.tfvars
+
+echo '[info]: Creating EC2 instance'
+TF_VAR_doppler_service_token=${DOPPLER_SERVICE_TOKEN} terraform apply -auto-approve -var-file terraform.tfvars
+
+echo '[info]: Terraform output'
+terraform output

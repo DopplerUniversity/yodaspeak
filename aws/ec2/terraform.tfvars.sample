@@ -1,0 +1,16 @@
+##############
+# REQUIRED #
+##############
+
+# AWS
+vpc_id = ""
+subnet_id = ""
+region=""
+key_name = ""
+
+############
+# OPTIONAL #
+############
+
+#app_name = "you-speak-yoda"
+#instance_type = "t2.micro"

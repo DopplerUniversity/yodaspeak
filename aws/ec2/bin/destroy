@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# usage: ./bin/destroy.sh
+
+terraform destroy -force -var-file terraform.tfvars

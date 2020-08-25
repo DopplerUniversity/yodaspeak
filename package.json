@@ -1,5 +1,8 @@
 {
     "name": "you-speak-yoda",
+    "repository": {
+        "url": "https://github.com/DopplerHQ/you-speak-yoda"
+    },
     "version": "1.0.0",
     "engines": {
         "node": "14.x"
