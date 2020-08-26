@@ -30,4 +30,4 @@ git clone https://github.com/DopplerHQ/you-speak-yoda.git /usr/src/app
 cd /usr/src/app
 npm install
 doppler enclave setup --no-prompt
-make prod-server-up
+nohup doppler run -- npm start >/dev/null 2>&1 &
