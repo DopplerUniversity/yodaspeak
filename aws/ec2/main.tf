@@ -132,11 +132,8 @@ resource "aws_instance" "this" {
   subnet_id                   = var.subnet_id
   associate_public_ip_address = true
   key_name                    = var.key_name
-
-  iam_instance_profile = aws_iam_instance_profile.this.name
-
-  # user_data = file("${path.module}/resources/amazon-linux2.sh")
-  user_data = templatefile("${path.module}/resources/amazon-linux2.sh", { service_token = "${var.doppler_service_token}", git_sha = "${var.git_sha}" })
+  iam_instance_profile        = aws_iam_instance_profile.this.name
+  user_data                   = templatefile("${path.module}/resources/amazon-linux2.sh", { doppler_service_token = "${var.doppler_service_token}", git_sha = "${var.git_sha}" })
 
   tags = {
     Name = "${var.app_name}"

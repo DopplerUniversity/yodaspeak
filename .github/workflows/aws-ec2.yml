@@ -1,8 +1,8 @@
-name: AWS EC2 Deploy
+name: AWS EC2 deploy with Terraform
 on: [workflow_dispatch]
 
 jobs:
-  terraform-apply:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -16,7 +16,7 @@ jobs:
         doppler --version
         doppler enclave setup --no-prompt --token ${{ secrets.DOPPLER_AWS_TERRAFORM_SERVICE_TOKEN }}
 
-    - name: Terraform init    
+    - name: Terraform init
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

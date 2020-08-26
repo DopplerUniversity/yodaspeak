@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
+# Required by Doppler
 export HOME=/root
-export PATH=$PATH:/usr/local/bin
-export PUBLIC_HOSTNAME=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
-export IP_ADDRESS=$(echo $(hostname -I) | awk '{print $1;}')
-export DOPPLER_TOKEN="${service_token}"
+
+# Build system supplies the service token and Git SHA
+export DOPPLER_TOKEN="${doppler_service_token}"
 export GIT_SHA="${git_sha}"
 
-# Add Doppler's yum repo
+# Add Doppler yum repo
 wget https://bintray.com/dopplerhq/doppler-rpm/rpm -O /etc/yum.repos.d/bintray-dopplerhq-doppler.repo
 
 # Add Node.js yum repo
@@ -25,9 +25,14 @@ yum install -y \
     nodejs \
     doppler
 
-# Setup app
+# Set up application
 git clone https://github.com/DopplerHQ/you-speak-yoda.git /usr/src/app
 cd /usr/src/app
 npm install
-doppler enclave setup --no-prompt
+
+# Configure Doppler to access secrets using a service token
+doppler enclave setup --no-prompt --token $DOPPLER_TOKEN
+
+# Pass secrets as environment vars to our application using `doppler run`
+# Run our application in a persistent background process
 nohup doppler run -- npm start >/dev/null 2>&1 &
