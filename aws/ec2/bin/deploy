@@ -1,16 +1,11 @@
 #!/usr/bin/env bash
 
-# usage: ` TF_VAR_doppler_service_token=dp.xxxx` ./bin/deploy.sh
+# This script is for deploying manually outside of GitHub actions for local development purposes.
 
-if [ -z ${DOPPLER_SERVICE_TOKEN+x} ]; then echo '[error]: Please set the DOPPLER_SERVICE_TOKEN environment variable.'; exit 1; fi
+GIT_SHA=$(git rev-parse HEAD)
 
-echo '[info]: Initializing Terraform and validating input'
-terraform init -upgrade
+terraform init --upgrade -input=false
 terraform validate
-terraform plan -var-file terraform.tfvars
-
-echo '[info]: Creating EC2 instance'
-TF_VAR_doppler_service_token=${DOPPLER_SERVICE_TOKEN} terraform apply -auto-approve -var-file terraform.tfvars
-
-echo '[info]: Terraform output'
+terraform plan -var git_sha=${GIT_SHA} -var-file terraform.tfvars
+terraform apply -auto-approve -var git_sha=${GIT_SHA} -var-file terraform.tfvars
 terraform output

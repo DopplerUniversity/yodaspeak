@@ -2,4 +2,4 @@
 
 # usage: ./bin/destroy.sh
 
-terraform destroy -force -var-file terraform.tfvars
+terraform destroy -force -var git_sha=$(git rev-parse HEAD) -var-file terraform.tfvars
