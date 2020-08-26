@@ -28,7 +28,7 @@ yum install -y \
 # Set up application
 git clone https://github.com/DopplerHQ/you-speak-yoda.git /usr/src/app
 cd /usr/src/app
-npm install
+npm install --production
 
 # Configure Doppler to access secrets using a service token
 doppler enclave setup --no-prompt --token $DOPPLER_TOKEN
