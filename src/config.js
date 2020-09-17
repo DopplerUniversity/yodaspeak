@@ -5,7 +5,7 @@ import colors from 'colors'
 if (process.env.DOPPLER_ENCLAVE_PROJECT) {
     console.log(colors.green('[info]: Using Doppler for config'))
 } else if (fs.existsSync('.env')) {
-    console.log(colors.green('[info]: .env file found, using for config.'))
+    console.log(colors.green('[info]: .env file found, using for config. You should be using Doppler!'))
     dotenv.config()
 } else {
     console.log(colors.red('[error]: No env var configuration found.'))
@@ -15,6 +15,7 @@ const config = Object.freeze({
     LOGGING: process.env.LOGGING,
     HOSTNAME: process.env.HOSTNAME,
     PORT: process.env.PORT,
+    TRANSLATE_ENDPOINT: process.env.TRANSLATE_ENDPOINT || '/translate', // Can be customized for static site deploys
     TLS_CERT: process.env.TLS_CERT,
     TLS_KEY: process.env.TLS_KEY,
     TLS_PORT: process.env.TLS_PORT,
