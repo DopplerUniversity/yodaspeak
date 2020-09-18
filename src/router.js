@@ -1,4 +1,5 @@
 import https from 'https'
+import cors from 'cors'
 import axios from 'axios'
 import express from 'express'
 import config from './config.js'
@@ -7,10 +8,13 @@ const app = express()
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    res.render('index', { translationSuggestion: config.TRANSLATION_SUGGESTION })
+    res.render('index', {
+        translationEndpoint: config.TRANSLATE_ENDPOINT,
+        translationSuggestion: config.TRANSLATION_SUGGESTION,
+    })
 })
 
-router.post('/translate', (req, res) => {
+router.post('/translate', cors(), (req, res) => {
     console.log(`[info]: tranlsate text "${req.body.text}"`)
     ;(async () => {
         try {

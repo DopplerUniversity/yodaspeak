@@ -4,3 +4,4 @@ package-lock.json
 ./public/img
 ./views
 Makefile
+dist

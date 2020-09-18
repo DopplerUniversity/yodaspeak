@@ -31,7 +31,7 @@ class App {
             this.$translation.classList.add('show')
         }
 
-        fetch('/translate', {
+        fetch(YODASPEAK_TRANSLATE_ENDPOINT, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -42,7 +42,10 @@ class App {
             .then(data => {
                 reveal(data.translation ? data.translation : data.error)
             })
-            .catch(error => console.error(error))
+            .catch(error => {
+                reveal('Sorry, am I, as translate your message, I cannot.')
+                console.error('Failed to fetch API response', error)
+            })
     }
 }
 

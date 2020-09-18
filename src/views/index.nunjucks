@@ -12,14 +12,14 @@
           <img class="yoda-text" src="/img/yoda-text.svg" />
         <span class="sr-only">You speak Yoda</span>
         </a>
-      </h1>      
+      </h1>
 
       <img class="yoda-img mb-4" src="/img/yoda.png" alt="Yoda">
 
       <p class="translation d-block h5 mb-4 font-weight-normal visible font-italic">&nbsp;</p>
 
       <form id="translate-form" class="translate-form">
-  
+
         <div class="form-row">
           <div class="col-sm-8 col-md-9 mt-2">
             <label for="input" class="sr-only">Text to translate</label>
@@ -40,5 +40,6 @@
   </div>
 </div>
 
+<script>const YODASPEAK_TRANSLATE_ENDPOINT = '{{ translationEndpoint }}';</script>
 <script src="/js/index.js"></script>
 {% endblock %}
