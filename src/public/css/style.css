@@ -34,7 +34,7 @@ body {
     box-shadow: 0 0 40px 0 #ceb696, 0 0 20px 0 #fff, inset 0 0 4px #fff;
 }
 
-.you-speak-yoda {
+.yodaspeak {
     margin-top: 1rem;
 }
 .yoda-text {
@@ -97,7 +97,7 @@ body {
 }
 
 @media (min-width: 768px) {
-    .you-speak-yoda {
+    .yodaspeak {
         margin-top: 3rem;
     }
 
@@ -118,8 +118,8 @@ body {
 }
 
 @media (min-height: 768px) {
-    .you-speak-yoda,
-    .you-speak-yoda-inner {
+    .yodaspeak,
+    .yodaspeak-inner {
         margin-top: 0;
         height: 100% !important;
     }

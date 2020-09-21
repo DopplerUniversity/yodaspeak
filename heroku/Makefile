@@ -1,7 +1,7 @@
 PROJECT=yodaspeak
 HEROKU_TEAM=dagobah
-HEROKU_APP_STAGING=you-speak-yoda-staging
-HEROKU_APP_PRODUCTION=you-speak-yoda-production
+HEROKU_APP_STAGING=yodaspeak-staging
+HEROKU_APP_PRODUCTION=yodaspeak-production
 
 # This is for the Doppler team to use, but you can adapt to deploy under your own Heroku account
 

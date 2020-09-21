@@ -20,7 +20,7 @@ variable "key_name" {
 }
 
 variable "app_name" {
-  default = "you-speak-yoda"
+  default = "yodaspeak"
   description = "Sets the (tag) name of the instance"
 }
 

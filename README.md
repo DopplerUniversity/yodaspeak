@@ -1,4 +1,4 @@
-# You Speak Yoda
+# Yoda Speak
 
 [![](./src/public/img/screenshot.jpg)](https://yodaspeak.io/)
 
@@ -50,7 +50,7 @@ doppler login
 1. In the Doppler Web UI, create a workspace
 1. Then [create a project](https://docs.doppler.com/docs/enclave-project-setup) called `' yodaspeak`
 1. Add the required secrets and configuration by uploading the contents of the `.env` file, then save.
-1. In a terminal, cd into the `you-speak-yoda` directory, then run:
+1. In a terminal, cd into the `yodaspeak` directory, then run:
 
 ```sh
 # Configure Doppler to fetch the `yodaspeak` secrets from the `dev` config
