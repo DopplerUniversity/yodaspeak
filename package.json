@@ -1,7 +1,7 @@
 {
-    "name": "you-speak-yoda",
+    "name": "yodaspeak",
     "repository": {
-        "url": "github:DopplerHQ/you-speak-yoda"
+        "url": "github:DopplerHQ/yodaspeak"
     },
     "version": "1.0.0",
     "engines": {

@@ -26,7 +26,7 @@ yum install -y \
     doppler
 
 # Set up application
-git clone https://github.com/DopplerHQ/you-speak-yoda.git /usr/src/app
+git clone https://github.com/DopplerHQ/yodaspeak.git /usr/src/app
 cd /usr/src/app
 npm install --production
 

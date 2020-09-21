@@ -23,5 +23,5 @@ doppler_service_token = ""
 # OPTIONAL #
 ############
 
-#app_name = "you-speak-yoda"
+#app_name = "yodaspeak"
 #instance_type = "t2.micro"
