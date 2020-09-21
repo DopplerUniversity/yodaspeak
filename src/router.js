@@ -14,6 +14,10 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/healthz', (req, res) => {
+    res.send('Healthy, this server is.')
+})
+
 router.post('/translate', cors(), (req, res) => {
     console.log(`[info]: tranlsate text "${req.body.text}"`)
     ;(async () => {
