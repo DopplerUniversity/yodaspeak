@@ -54,7 +54,7 @@ doppler login
 
 ```sh
 # Configure Doppler to fetch the `yodaspeak` secrets from the `dev` config
-doppler enclave setup
+doppler setup
 ```
 
 To check that the Doppler CLI can access the project and retrieve its secrets, run:
