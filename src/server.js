@@ -4,12 +4,14 @@ import colors from 'colors'
 import config from './config.js'
 import app from './app.js'
 
-http.createServer(app).listen(config.PORT, config.HOSTNAME, () => {
+let httpServer, httpsServer;
+
+httpServer = http.createServer(app).listen(config.PORT, config.HOSTNAME, () => {
     console.log(colors.green(`[info]: HTTP server at http://${config.HOSTNAME}:${config.PORT}/ (Press CTRL+C to quit)`))
 })
 
 if (config.TLS_PORT && config.TLS_CERT && config.TLS_PORT) {
-    https
+    httpsServer = https
         .createServer(
             {
                 cert: config.TLS_CERT,
@@ -25,3 +27,13 @@ if (config.TLS_PORT && config.TLS_CERT && config.TLS_PORT) {
             )
         })
 }
+
+process.on('SIGINT', () => {
+    console.log(colors.green(`\n[info]: Shutting down HTTP server`))
+    httpServer.close()
+
+    if (httpsServer) {
+        console.log(colors.green(`[info]: Shutting down HTTPS server`))
+        httpsServer.close()
+    }
+})
