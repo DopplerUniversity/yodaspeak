@@ -2,7 +2,7 @@ import fs from 'fs'
 import dotenv from 'dotenv'
 import colors from 'colors'
 
-if (process.env.DOPPLER_ENCLAVE_PROJECT) {
+if (process.env.DOPPLER_PROJECT || process.env.DOPPLER_ENCLAVE_PROJECT) {
     console.log(colors.green('[info]: Using Doppler for config'))
 } else if (fs.existsSync('.env')) {
     console.log(colors.green('[info]: .env file found, using for config. You should be using Doppler!'))
