@@ -1,6 +1,6 @@
 # Deploying on Render
 
-Follow these instructions to get YodaSpeak running on Render as a web application. Note that this app is free to deploy as part of the initial 7 day trial.
+Follow these instructions to get YodaSpeak running on Render as a web application.
 
 ## Configuring Doppler
 
@@ -23,9 +23,9 @@ Now we need to create a service token that we'll use in Render:
 
 <!-- todo(ryan): Remove `doppler-cloud-install-standalone` and `./doppler` once Render have updated the CLI to be v3.13.0 or greater -->
 
-We will cofigure Doppler on Render to use a [Doppler Service Token](https://docs.doppler.com/docs/enclave-service-tokens).
+We will configure Doppler on Render to use a [Doppler Service Token](https://docs.doppler.com/docs/enclave-service-tokens).
 
-You'll also notice for the `doppler` commands below that the `.doppler.yaml` config file is set to be in the root of this repository. This is because Render will zip up the repository folder for deployment so we need the Doppler config file bundled with our application payload.
+The `doppler` commands below set the`.doppler.yaml` config file to reside in the repository root, so it is bundled with our application payload.
 
 To configure Render:
 
@@ -47,8 +47,11 @@ Now you need to configure the application with a single environment variable tha
 1. Click on the **Environment** tab
 2. Create a new variable with key name `DOPPLER_TOKEN` and the value being the service token you copied earlier
 3. Click **Save Changes**
-4. To apply this configuation change, manually trigger a new deploy by clicking **Manual Deploy**, selecting **Clear build cache and deploy**
+
+## Deploy your site using Doppler for configuration
+
+The final step is to apply these changes by triggering a **Manual Deploy**, selecting **Clear build cache and deploy**. This manual deploy is required as Render does not automatically re-deploy your application when the environment variables change.
 
 ## Viewing your deployed site
 
-If everything is configured properly, you should be able to now see your site working at the URL provided by Render.
+Once the manual deploy has completed, you should now be able to access the YodaSpeak application at the Render provided URL.
