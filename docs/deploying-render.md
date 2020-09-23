@@ -33,7 +33,7 @@ To configure Render:
 2. Create a new app with a unique name using `https://github.com/dopplerhq/yodaspeak` as the repository
 3. Set the **Build Command** to be:
 ```
-npm run doppler-cloud-install-standalone; ./doppler setup --silent --configuration .doppler.yaml; npm install --production;
+npm run doppler-cloud-install-standalone; ./doppler setup --no-prompt --silent --configuration .doppler.yaml; npm install --production;
 ```
 4. Set the **Start Command** to be:
 ```
