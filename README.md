@@ -79,7 +79,7 @@ You can now access the site at [http://localhost:3000](http://localhost:3000)
 
 Follow the deployment guides for the below hosting providers:
 
-- [Render](docs/deploying-render.md)
+-   [Render](docs/deploying-render.md)
 
 ## Having trouble getting the app working?
 

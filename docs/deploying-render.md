@@ -7,10 +7,12 @@ Follow these instructions to get YodaSpeak running on Render as a web applicatio
 1. Create a new project called `yodaspeak`
 2. Go to **prd** and upload the contents of the [sample.env](../sample.env) file
 3. Alter the secret values accordingly:
-  - Change `HOSTNAME` to be `0.0.0.0`
-  - Change `LOGGING` to `common`
-  - Change `NODE_ENV` to `production`
-  - Delete `PORT`
+
+-   Change `HOSTNAME` to be `0.0.0.0`
+-   Change `LOGGING` to `common`
+-   Change `NODE_ENV` to `production`
+-   Delete `PORT`
+
 4. Click **Save** to save your secrets
 
 Now we need to create a service token that we'll use in Render:
@@ -32,13 +34,17 @@ To configure Render:
 1. Log into Render
 2. Create a new app with a unique name using `https://github.com/dopplerhq/yodaspeak` as the repository
 3. Set the **Build Command** to be:
+
 ```
 npm run doppler-cloud-install-standalone; ./doppler setup --no-prompt --silent --configuration .doppler.yaml; npm install --production;
 ```
+
 4. Set the **Start Command** to be:
+
 ```
 ./doppler run --configuration .doppler.yaml -- npm start;
 ```
+
 5. Set the **Health Check Path** to be `/healthz`
 6. Create the app
 

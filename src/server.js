@@ -4,7 +4,7 @@ import colors from 'colors'
 import config from './config.js'
 import app from './app.js'
 
-let httpServer, httpsServer;
+let httpServer, httpsServer
 
 httpServer = http.createServer(app).listen(config.PORT, config.HOSTNAME, () => {
     console.log(colors.green(`[info]: HTTP server at http://${config.HOSTNAME}:${config.PORT}/ (Press CTRL+C to quit)`))
