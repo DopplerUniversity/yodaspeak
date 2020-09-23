@@ -1,4 +1,4 @@
-# Yoda Speak
+# YodaSpeak
 
 [![](./src/public/img/screenshot.jpg)](https://yodaspeak.io/)
 
@@ -74,6 +74,12 @@ doppler run -- npm start
 ```
 
 You can now access the site at [http://localhost:3000](http://localhost:3000)
+
+## Deploying
+
+Follow the deployment guides for the below hosting providers:
+
+- [Render](docs/deploying-render.md)
 
 ## Having trouble getting the app working?
 
