@@ -1,6 +1,6 @@
 class App {
     constructor() {
-        this.stars(document.getElementById('stars'), 900)
+        this.stars(document.getElementById('stars'), window.innerWidth * 0.9)
         this.$text = document.querySelector('input[name="text"]')
         this.$translation = document.querySelector('.translation')
         document.querySelector('form').addEventListener('submit', e => this.translate(e))
