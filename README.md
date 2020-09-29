@@ -1,4 +1,4 @@
-# YodaSpeak
+# Yoda Speak
 
 [![](./src/public/img/screenshot.jpg)](https://yodaspeak.io/)
 
