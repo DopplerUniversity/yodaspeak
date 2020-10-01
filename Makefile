@@ -25,7 +25,7 @@ docker-build:
 # Needs `DOPPLER_TOKEN` env var to fetch secrets from Doppler's API
 # Learn more at https://docs.doppler.com/docs/enclave-service-tokens
 docker-run:
-	docker container run -it --rm -e DOPPLER_TOKEN=$(DOPPLER_TOKEN) -p 3000:3000 yodaspeak:latest
+	docker container run -it --rm -e DOPPLER_TOKEN=$(DOPPLER_TOKEN) -p 3000:3000 dopplerhq/yodaspeak:latest
 
 docker-push: docker-build
 	docker image push dopplerhq/yodaspeak
