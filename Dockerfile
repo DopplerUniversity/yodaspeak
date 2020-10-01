@@ -1,5 +1,6 @@
 FROM node:14-alpine
 
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 LABEL maintainer="Ryan Blunden <ryan.blunden@ext.doppler.com>"
 
 # Must be supplied at runtime in order for Docker to retrieve secrets
