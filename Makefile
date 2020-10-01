@@ -17,10 +17,13 @@ static-server:
 # Prod server - persistent background process without process manager or Docker
 # Uses sudo to bind to port 80 and/or 443
 
-# # Docker
+## Docker
 
 docker-build:
 	docker image build -t dopplerhq/yodaspeak:latest .
+
+docker-buildx:
+	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build -t dopplerhq/yodaspeak:latest .
 
 # Needs `DOPPLER_TOKEN` env var to fetch secrets from Doppler's API
 # Learn more at https://docs.doppler.com/docs/enclave-service-tokens
