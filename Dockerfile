@@ -1,20 +1,18 @@
-FROM node:14
+FROM node:14-alpine
 
 LABEL maintainer="Ryan Blunden <ryan.blunden@ext.doppler.com>"
 
-# DOPPLER_TOKEN must be supplied as a build-arg
-ARG DOPPLER_TOKEN
+# Must be supplied at runtime in order for Docker to retrieve secrets
 ENV DOPPLER_TOKEN ${DOPPLER_TOKEN}
 
 # Install the Doppler CLI
-RUN curl -Ls https://cli.doppler.com/install.sh | sh
-
-# Execute `doppler run` so it creates a secrets fallback file
-RUN doppler run -- echo "Create secrets fallback file"
+RUN wget -qO- https://cli.doppler.com/install.sh | sh
 
 WORKDIR /usr/src/app
-COPY ["package.json", "package-lock.json*", "src", "./"]
-RUN npm install --production --silent && mv node_modules ../
+COPY package.json package-lock.json ./
+RUN npm clean-install --only=production --silent --no-audit && mv node_modules ../
 COPY . .
+
+USER node
 
 CMD ["doppler", "run", "--", "npm", "start"]
