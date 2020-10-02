@@ -14,7 +14,7 @@ jobs:
                   echo "deb https://dl.bintray.com/dopplerhq/doppler-deb stable main" | sudo tee /etc/apt/sources.list.d/dopplerhq-doppler.list
                   sudo apt-get update && sudo apt-get install doppler
                   doppler --version
-                  doppler enclave setup --no-prompt --token ${{ secrets.DOPPLER_AWS_TERRAFORM_SERVICE_TOKEN }}
+                  doppler setup --no-prompt --token ${{ secrets.DOPPLER_AWS_TERRAFORM_SERVICE_TOKEN }}
 
             - name: Terraform init
               env:
