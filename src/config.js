@@ -22,6 +22,7 @@ const config = Object.freeze({
     TRANSLATION_SUGGESTION: process.env.TRANSLATION_SUGGESTION,
     YODA_TRANSLATE_API_ENDPOINT: process.env.YODA_TRANSLATE_API_ENDPOINT,
     YODA_TRANSLATE_API_KEY: process.env.YODA_TRANSLATE_API_KEY,
+    RATE_LIMITING_ENABLED: process.env.RATE_LIMITING_ENABLED === 'true' ? true : false,
 })
 
 export default config

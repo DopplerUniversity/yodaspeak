@@ -14,9 +14,13 @@ const PREDEFINED_TRANSLATIONS = {
 
 const app = express()
 const router = express.Router()
+
+if (config.RATE_LIMITING_ENABLED) {
+    console.log(colors.green('[info]: rate limiting enabled'))
+}
 const translationLimiter = rateLimit({
     windowMs: 60 * 60 * 1000,
-    max: 60,
+    max: config.RATE_LIMITING_ENABLED ? 60 : 0,
     handler: (req, res) => {
         res.json({
             text: req.body.text,
