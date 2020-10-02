@@ -75,7 +75,7 @@ heroku-create:
 	heroku domains:wait --app $(HEROKU_APP) yodaspeak.io
 	git remote rename heroku $(HEROKU_APP)
 
-	$(MAKE) heroku-deploy API_KEY=$(API_KEY)
+	$(MAKE) heroku-deploy
 
 heroku-set-vars:
 	heroku config:set --app $(HEROKU_APP) \
@@ -88,6 +88,9 @@ heroku-set-vars:
 	YODA_TRANSLATE_API_KEY="$(API_KEY)" \
 	RATE_LIMITING_ENABLED="true" \
 	NPM_CONFIG_PRODUCTION="true"
+
+heroku-get-vars:
+	heroku config --json -a $(HEROKU_APP)
 
 heroku-deploy:
 	git push $(HEROKU_APP) master -f
