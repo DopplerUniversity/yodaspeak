@@ -31,7 +31,7 @@ cd /usr/src/app
 npm install --production
 
 # Configure Doppler to access secrets using a service token
-doppler enclave setup --no-prompt --token $DOPPLER_TOKEN
+doppler setup --no-prompt --token $DOPPLER_TOKEN
 
 # Pass secrets as environment vars to our application using `doppler run`
 # Run our application in a persistent background process
