@@ -3,7 +3,14 @@ import cors from 'cors'
 import axios from 'axios'
 import express from 'express'
 import rateLimit from 'express-rate-limit'
+import colors from 'colors'
 import config from './config.js'
+
+const PREDEFINED_TRANSLATIONS = {
+    'Secrets must not be stored in git repositories': 'Stored in git repositories, secrets must not be',
+    'master obi-wan has learnt the power of secrets management':
+        'Learnt the power of secrets management, master obi-wan has',
+}
 
 const app = express()
 const router = express.Router()
@@ -30,7 +37,22 @@ router.get('/healthz', (req, res) => {
 })
 
 router.post('/translate', cors(), translationLimiter, (req, res) => {
-    console.log(`[info]: tranlsate text "${req.body.text}"`)
+    console.log(colors.green(`[info]: tranlsate text "${req.body.text}"`))
+
+    // Predefined translations help showcase the app without an API key
+    const predefinedTranslation = PREDEFINED_TRANSLATIONS[req.body.text.trim()]
+    if (predefinedTranslation) {
+        console.log(colors.green(`[info]: translation returned from predefined list`))
+        return setTimeout(
+            () =>
+                res.json({
+                    text: req.body.text,
+                    translation: predefinedTranslation,
+                }),
+            1000
+        )
+    }
+
     ;(async () => {
         try {
             const response = await axios.post(config.YODA_TRANSLATE_API_ENDPOINT, `text=${req.body.text}`, {
@@ -43,7 +65,7 @@ router.post('/translate', cors(), translationLimiter, (req, res) => {
                 translation: response.data.contents.translated,
             })
         } catch (error) {
-            console.log(`[error]: translation failed: ${error.response.data.error.message}`)
+            console.log(colors.red(`[error]: translation failed: ${error.response.data.error.message}`))
             res.status(500).json({ text: req.body.text, error: 'Sorry, am I, as translate your message, I cannot.' })
         }
     })()
