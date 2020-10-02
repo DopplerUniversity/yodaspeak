@@ -2,7 +2,7 @@
 
 [![](./src/public/img/screenshot.jpg)](https://yodaspeak.io/)
 
-A simple application to translate english into Yoda's version, which is mostly, back to front, or, in other words, [object–subject–verb](https://en.wikipedia.org/wiki/Object%E2%80%93subject%E2%80%93verb) word order.
+A simple application to translate English into Yoda's version, which is mostly, back to front, or, in other words, [object–subject–verb](https://en.wikipedia.org/wiki/Object%E2%80%93subject%E2%80%93verb) word order.
 
 It's designed to show how to use the [Doppler Universal Secrets Manager](https://doppler.com/) for securely and easily fetching secrets and application configuration via environment variables.
 
@@ -48,8 +48,8 @@ doppler login
 
 1. Once logged in, open a new browser window and [sign in to Doppler](https://dashboard.doppler.com/)
 1. In the Doppler Web UI, create a workspace
-1. Then [create a project](https://docs.doppler.com/docs/enclave-project-setup) called `' yodaspeak`
-1. Add the required secrets and configuration by uploading the contents of the `.env` file, then save.
+1. Then [create a project](https://docs.doppler.com/docs/enclave-project-setup) called `yodaspeak`
+1. Add the required secrets and configuration by uploading the contents of `sample.env` file, then save.
 1. In a terminal, cd into the `yodaspeak` directory, then run:
 
 ```sh
@@ -75,9 +75,57 @@ doppler run -- npm start
 
 You can now access the site at [http://localhost:3000](http://localhost:3000)
 
+## Using Docker
+
+You can use Docker to run the app in the same way you would in production with a [Doppler service token](https://docs.doppler.com/docs/enclave-service-tokens), or you can configure it the same way you would a local development environment.
+
+> NOTE: If you change the value for `PORT` in Doppler, then you'll need to update the port binding in the `docker container run` command to match. For example, if `PORT` were changed to `8080`, then it would be `-p 8080:8080`.
+
+### Running in production mode with a service token
+
+Using Docker requires a [Doppler service token](https://docs.doppler.com/docs/enclave-service-tokens) for a config populated with the secrets in the [sample.env file](sample.env), as all secrets will be fetched at runtime.
+
+To run the Yoda Speak Docker container, run:
+
+```sh
+ docker container run -it --rm -e DOPPLER_TOKEN="dp.st.xxx" -p 3000:3000 dopplerhq/yodaspeak:latest
+```
+
+### Running in development mode
+
+To run the Yoda Speak container in development mode, we will execute a shell instead of the `doppler run` command so we can authenticate from and configure Doppler within the container, then start the server manually.
+
+```sh
+# Run the container with a shell
+docker container run -it --rm -p 3000:3000 dopplerhq/yodaspeak:latest sh
+```
+
+> NOTE: All of the below commands are to be executed inside the running container
+
+Now authenticate from within the container:
+
+```sh
+# Manually copy the auth code
+doppler login
+```
+
+Once you've authenticated and created the token for your user, now configure Doppler to access the correct project and config:
+
+```sh
+doppler setup
+```
+
+Now you're ready to run the server manually:
+
+```sh
+doppler run -- npm start
+```
+
+You should now be able to access the app from your browser at [http://localhost:3000/](http://localhost:3000/)
+
 ## Deploying
 
-Follow the deployment guides for the below hosting providers:
+Yoda Speak currently has deployment guides for the following platforms:
 
 -   [Render](docs/deploying-render.md)
 

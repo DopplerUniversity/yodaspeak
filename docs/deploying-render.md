@@ -8,7 +8,6 @@ Follow these instructions to get YodaSpeak running on Render as a web applicatio
 2. Go to **prd** and upload the contents of the [sample.env](../sample.env) file
 3. Alter the secret values accordingly:
 
--   Change `HOSTNAME` to be `0.0.0.0`
 -   Change `LOGGING` to `common`
 -   Change `NODE_ENV` to `production`
 -   Delete `PORT`
@@ -18,14 +17,14 @@ Follow these instructions to get YodaSpeak running on Render as a web applicatio
 Now we need to create a service token that we'll use in Render:
 
 1. Ensuring you are still viewing your secrets for YodaSpeak in the **prd** environment, click on the **Acess** tab
-2. Create a **Service Token**, naming it **Render**
+2. Create a **service token**, naming it **Render**
 3. Copy the service token to your clipboard as you'll need it for configuring Render
 
 ## Configuring Render
 
 <!-- todo(ryan): Remove `doppler-cloud-install-standalone` and `./doppler` once Render have updated the CLI to be v3.13.0 or greater -->
 
-We will configure Doppler on Render to use a [Doppler Service Token](https://docs.doppler.com/docs/enclave-service-tokens).
+We will configure Doppler on Render to use a [Doppler service token](https://docs.doppler.com/docs/enclave-service-tokens).
 
 The `doppler` commands below set the`.doppler.yaml` config file to reside in the repository root, so it is bundled with our application payload.
 
@@ -48,7 +47,7 @@ npm run doppler-cloud-install-standalone; ./doppler setup --no-prompt --silent -
 5. Set the **Health Check Path** to be `/healthz`
 6. Create the app
 
-Now you need to configure the application with a single environment variable that contains the [Doppler Service Token](https://docs.doppler.com/docs/enclave-service-tokens):
+Now you need to configure the application with a single environment variable that contains the [Doppler service token](https://docs.doppler.com/docs/enclave-service-tokens):
 
 1. Click on the **Environment** tab
 2. Create a new variable with key name `DOPPLER_TOKEN` and the value being the service token you copied earlier
