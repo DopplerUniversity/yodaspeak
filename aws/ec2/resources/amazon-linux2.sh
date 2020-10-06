@@ -28,10 +28,7 @@ yum install -y \
 # Set up application
 git clone https://github.com/DopplerHQ/yodaspeak.git /usr/src/app
 cd /usr/src/app
-npm install --production
-
-# Configure Doppler to access secrets using a service token
-doppler setup --no-prompt --token $DOPPLER_TOKEN
+npm clean-install --only=production --silent --no-audit
 
 # Pass secrets as environment vars to our application using `doppler run`
 # Run our application in a persistent background process

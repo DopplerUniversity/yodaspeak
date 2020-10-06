@@ -5,26 +5,21 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v2
 
-            - name: Install and configure Doppler
-              working-directory: ./aws/ec2
-              run: |
-                  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61
-                  echo "deb https://dl.bintray.com/dopplerhq/doppler-deb stable main" | sudo tee /etc/apt/sources.list.d/dopplerhq-doppler.list
-                  sudo apt-get update && sudo apt-get install doppler
-                  doppler --version
-                  doppler setup --no-prompt --token ${{ secrets.DOPPLER_AWS_TERRAFORM_SERVICE_TOKEN }}
+            - name: Install Doppler CLI
+              uses: dopplerhq/cli-action@v1
 
             - name: Terraform init
-              env:
-                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
               working-directory: ./aws/ec2
-              run: terraform init --upgrade -input=false
+              env:
+                DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+              run: doppler run -- terraform init --upgrade -input=false
 
             - name: Configure Terraform using Doppler
               working-directory: ./aws/ec2
+              env:
+                  DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
               run: |
                   doppler run -- sh -c 'echo vpc_id = \"$VPC_ID\"' >> terraform.tfvars
                   doppler run -- sh -c 'echo subnet_id = \"$SUBNET_ID\"' >> terraform.tfvars
@@ -40,9 +35,6 @@ jobs:
               run: terraform validate
 
             - name: Terraform apply
-              env:
-                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
               working-directory: ./aws/ec2
               run: |
-                  terraform apply -var-file terraform.tfvars -var git_sha=$GITHUB_SHA -auto-approve
+                  doppler run -- terraform apply -var-file terraform.tfvars -var git_sha=$GITHUB_SHA -auto-approve
