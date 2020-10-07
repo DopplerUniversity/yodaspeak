@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "yodaspeak-terraform"
+    bucket = "you-speak-yoda-terraform"
     key    = "yodaspeak"
     region = "us-west-2"
   }
