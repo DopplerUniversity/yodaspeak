@@ -32,9 +32,13 @@ jobs:
 
             - name: Terraform validation
               working-directory: ./aws/ec2
-              run: terraform validate
+              env:
+                DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+              run: doppler run -- terraform validate
 
             - name: Terraform apply
               working-directory: ./aws/ec2
+              env:
+                DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
               run: |
                   doppler run -- terraform apply -var-file terraform.tfvars -var git_sha=$GITHUB_SHA -auto-approve
