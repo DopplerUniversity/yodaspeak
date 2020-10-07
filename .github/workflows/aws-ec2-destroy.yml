@@ -15,13 +15,13 @@ jobs:
               env:
                   DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
               run: |
-                  doppler run -- terraform init --upgrade -input=false
-                  doppler run -- sh -c 'echo vpc_id = \"$VPC_ID\"' >> terraform.tfvars
-                  doppler run -- sh -c 'echo subnet_id = \"$SUBNET_ID\"' >> terraform.tfvars
-                  doppler run -- sh -c 'echo region = \"$REGION\"' >> terraform.tfvars
-                  doppler run -- sh -c 'echo key_name = \"$KEY_NAME\"' >> terraform.tfvars
-                  doppler run -- sh -c 'echo cloudflare_email = \"$CLOUDFLARE_EMAIL\"' >> terraform.tfvars
-                  doppler run -- sh -c 'echo cloudflare_api_key = \"$CLOUDFLARE_API_KEY\"' >> terraform.tfvars
-                  doppler run -- sh -c 'echo cloudflare_zone_id = \"$CLOUDFLARE_ZONE_ID\"' >> terraform.tfvars
-                  doppler run -- sh -c 'echo doppler_service_token = \"$DOPPLER_AWS_APP_SERVICE_TOKEN\"' >> terraform.tfvars
-                  doppler run -- terraform destroy -force -var-file terraform.tfvars
+                  doppler run --command 'terraform init --upgrade -input=false && \
+                    echo vpc_id = \"${VPC_ID}\" >> terraform.tfvars && \
+                    echo subnet_id = \"${SUBNET_ID}\" >> terraform.tfvars && \
+                    echo region = \"${REGION}\" >> terraform.tfvars && \
+                    echo key_name = \"${KEY_NAME}\" >> terraform.tfvars && \
+                    echo cloudflare_email = \"${CLOUDFLARE_EMAIL}\" >> terraform.tfvars && \
+                    echo cloudflare_api_key = \"${CLOUDFLARE_API_KEY}\" >> terraform.tfvars && \
+                    echo cloudflare_zone_id = \"${CLOUDFLARE_ZONE_ID}\" >> terraform.tfvars && \
+                    echo doppler_service_token = \"${DOPPLER_AWS_APP_SERVICE_TOKEN}\" >> terraform.tfvars && \
+                    terraform destroy -force -var-file terraform.tfvars -var git_sha=${GITHUB_SHA}'
