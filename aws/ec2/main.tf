@@ -109,9 +109,18 @@ resource "aws_security_group" "this" {
 # ------------------------------------------
 
 resource "aws_iam_role" "this" {
-  name = "${var.app_name}-role"
+  name                = "${var.app_name}-role"
+  assume_role_policy  = file("${path.module}/resources/iam-policy-instance-assume-role.json")
+}
 
-  assume_role_policy = file("${path.module}/resources/iam-policy-instance-assume-role.json")
+resource "aws_iam_policy" "this" {
+  name    = "${var.app_name}-access-policy"
+  policy   = file("${path.module}/resources/ec2-role-access-policy.json")
+}
+
+resource "aws_iam_role_policy_attachment" "this" {
+  role       = aws_iam_role.this.name
+  policy_arn = aws_iam_policy.this.arn
 }
 
 resource "aws_iam_instance_profile" "this" {

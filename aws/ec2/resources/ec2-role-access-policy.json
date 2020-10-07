@@ -1,0 +1,17 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowSSMAccess",
+            "Effect": "Allow",
+            "Action": [
+                "ssm:GetParameterHistory",
+                "ssm:GetParametersByPath",
+                "ssm:GetParameters",
+                "ssm:GetParameter",
+                "ssm:DescribeParameters"
+            ],
+            "Resource": "arn:aws:ssm:*:*:parameter/*"
+        }
+    ]
+}

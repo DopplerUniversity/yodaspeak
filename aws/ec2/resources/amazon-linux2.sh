@@ -7,6 +7,9 @@ export HOME=/root
 export DOPPLER_TOKEN="${doppler_service_token}"
 export GIT_SHA="${git_sha}"
 
+# Add Doppler token to root env vars
+echo "export DOPPLER_TOKEN=${DOPPLER_TOKEN}" >> $HOME/.bashrc
+
 # Add Doppler yum repo
 wget https://bintray.com/dopplerhq/doppler-rpm/rpm -O /etc/yum.repos.d/bintray-dopplerhq-doppler.repo
 
