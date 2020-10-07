@@ -10,17 +10,12 @@ jobs:
             - name: Install Doppler CLI
               uses: dopplerhq/cli-action@v1
 
-            - name: Terraform init
-              working-directory: ./aws/ec2
-              env:
-                DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
-              run: doppler run -- terraform init --upgrade -input=false
-
-            - name: Configure Terraform using Doppler
+            - name: Install and configure Terraform using Doppler
               working-directory: ./aws/ec2
               env:
                   DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
               run: |
+                  doppler run -- terraform init --upgrade -input=false
                   doppler run -- sh -c 'echo vpc_id = \"$VPC_ID\"' >> terraform.tfvars
                   doppler run -- sh -c 'echo subnet_id = \"$SUBNET_ID\"' >> terraform.tfvars
                   doppler run -- sh -c 'echo region = \"$REGION\"' >> terraform.tfvars
@@ -33,12 +28,36 @@ jobs:
             - name: Terraform validation
               working-directory: ./aws/ec2
               env:
-                DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+                  DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
               run: doppler run -- terraform validate
 
             - name: Terraform apply
               working-directory: ./aws/ec2
               env:
-                DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+                  DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
               run: |
                   doppler run -- terraform apply -var-file terraform.tfvars -var git_sha=$GITHUB_SHA -auto-approve
+
+    destroy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Install Doppler CLI
+              uses: dopplerhq/cli-action@v1
+
+            - name: Destroy
+              working-directory: ./aws/ec2
+              env:
+                  DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+              run: |
+                  doppler run -- terraform init --upgrade -input=false
+                  doppler run -- sh -c 'echo vpc_id = \"$VPC_ID\"' >> terraform.tfvars
+                  doppler run -- sh -c 'echo subnet_id = \"$SUBNET_ID\"' >> terraform.tfvars
+                  doppler run -- sh -c 'echo region = \"$REGION\"' >> terraform.tfvars
+                  doppler run -- sh -c 'echo key_name = \"$KEY_NAME\"' >> terraform.tfvars
+                  doppler run -- sh -c 'echo cloudflare_email = \"$CLOUDFLARE_EMAIL\"' >> terraform.tfvars
+                  doppler run -- sh -c 'echo cloudflare_api_key = \"$CLOUDFLARE_API_KEY\"' >> terraform.tfvars
+                  doppler run -- sh -c 'echo cloudflare_zone_id = \"$CLOUDFLARE_ZONE_ID\"' >> terraform.tfvars
+                  doppler run -- sh -c 'echo doppler_service_token = \"$DOPPLER_AWS_APP_SERVICE_TOKEN\"' >> terraform.tfvars
+                  terraform destroy -force -var-file terraform.tfvars
