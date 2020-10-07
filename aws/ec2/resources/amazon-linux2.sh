@@ -31,7 +31,7 @@ yum install -y \
 # Set up application
 git clone https://github.com/DopplerHQ/yodaspeak.git /usr/src/app
 cd /usr/src/app
-git checkout ${GIT_SHA}
+git checkout ${git_sha}
 npm clean-install --only=production --silent --no-audit
 
 # Pass secrets as environment vars to our application using `doppler run`
