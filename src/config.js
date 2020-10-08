@@ -1,7 +1,7 @@
 import fs from 'fs'
 import dotenv from 'dotenv'
 import colors from 'colors'
-import awsParamStore from './config/aws_param_store.js'
+import awsParamStore from './config/aws-param-store.js'
 
 let config = {}
 
@@ -21,19 +21,7 @@ if (awsParamStore.isActive()) {
             `region: ${process.env.AWS_SSM_REGION}`
         )
     )
-    config = {
-        LOGGING: awsParamStore.get('LOGGING'),
-        HOSTNAME: awsParamStore.get('HOSTNAME'),
-        PORT: awsParamStore.get('PORT'),
-        TRANSLATE_ENDPOINT: awsParamStore.get('TRANSLATE_ENDPOINT') || '/translate',
-        TLS_CERT: awsParamStore.get('TLS_CERT'),
-        TLS_KEY: awsParamStore.get('TLS_KEY'),
-        TLS_PORT: awsParamStore.get('TLS_PORT'),
-        TRANSLATION_SUGGESTION: awsParamStore.get('TRANSLATION_SUGGESTION'),
-        YODA_TRANSLATE_API_ENDPOINT: awsParamStore.get('YODA_TRANSLATE_API_ENDPOINT'),
-        YODA_TRANSLATE_API_KEY: awsParamStore.get('YODA_TRANSLATE_API_KEY'),
-        RATE_LIMITING_ENABLED: awsParamStore.get('RATE_LIMITING_ENABLED') === 'true' ? true : false,
-    }
+    config = awsParamStore.getConfig()
 } else {
     config = {
         LOGGING: process.env.LOGGING,
