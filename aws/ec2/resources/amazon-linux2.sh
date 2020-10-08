@@ -7,9 +7,6 @@ export HOME=/root
 export DOPPLER_TOKEN="${doppler_service_token}"
 export GIT_SHA="${git_sha}"
 
-# Add Doppler token to root env vars. Mainly for remote testing purposes
-echo "export DOPPLER_TOKEN=${doppler_service_token}" >> $HOME/.bashrc
-
 # Add Doppler yum repo
 wget https://bintray.com/dopplerhq/doppler-rpm/rpm -O /etc/yum.repos.d/bintray-dopplerhq-doppler.repo
 
@@ -33,6 +30,9 @@ git clone https://github.com/DopplerHQ/yodaspeak.git /usr/src/app
 cd /usr/src/app
 git checkout ${git_sha}
 npm clean-install --only=production --silent --no-audit
+
+# Persist Doppler service token
+doppler configure service token ${doppler_service_token}
 
 # Pass secrets as environment vars to our application using `doppler run`
 # Run our application in a persistent background process
