@@ -11,7 +11,21 @@
                 "ssm:GetParameter",
                 "ssm:DescribeParameters"
             ],
-            "Resource": "arn:aws:ssm:*:*:parameter/*"
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowSecretsManagerAccess",
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+                "secretsmanager:PutSecretValue",
+                "secretsmanager:CreateSecret",
+                "secretsmanager:DeleteSecret",
+                "secretsmanager:TagResource",
+                "secretsmanager:UpdateSecret"
+            ],
+            "Resource": "*"
         }
     ]
 }
