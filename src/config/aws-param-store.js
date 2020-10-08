@@ -4,7 +4,7 @@ import awsParamStore from 'aws-param-store'
 const isActive = () =>
     process.env.AWS_SSM_ENABLED === 'true' && process.env.AWS_SSM_PREFIX && process.env.AWS_SSM_REGION
 
-const get = key => {
+const getValue = key => {
     try {
         return awsParamStore.getParameterSync(`${process.env.AWS_SSM_PREFIX}${key}`, {
             region: process.env.AWS_SSM_REGION,
@@ -22,20 +22,20 @@ const get = key => {
 
 const getConfig = () => {
     return {
-        LOGGING: get('LOGGING'),
-        HOSTNAME: get('HOSTNAME'),
-        PORT: get('PORT'),
-        TRANSLATE_ENDPOINT: get('TRANSLATE_ENDPOINT') || '/translate',
-        TLS_CERT: get('TLS_CERT'),
-        TLS_KEY: get('TLS_KEY'),
-        TLS_PORT: get('TLS_PORT'),
-        TRANSLATION_SUGGESTION: get('TRANSLATION_SUGGESTION'),
-        YODA_TRANSLATE_API_ENDPOINT: get('YODA_TRANSLATE_API_ENDPOINT'),
-        YODA_TRANSLATE_API_KEY: get('YODA_TRANSLATE_API_KEY'),
-        RATE_LIMITING_ENABLED: get('RATE_LIMITING_ENABLED') === 'true' ? true : false,
+        LOGGING: getValue('LOGGING'),
+        HOSTNAME: getValue('HOSTNAME'),
+        PORT: getValue('PORT'),
+        TRANSLATE_ENDPOINT: getValue('TRANSLATE_ENDPOINT') || '/translate',
+        TLS_CERT: getValue('TLS_CERT'),
+        TLS_KEY: getValue('TLS_KEY'),
+        TLS_PORT: getValue('TLS_PORT'),
+        TRANSLATION_SUGGESTION: getValue('TRANSLATION_SUGGESTION'),
+        YODA_TRANSLATE_API_ENDPOINT: getValue('YODA_TRANSLATE_API_ENDPOINT'),
+        YODA_TRANSLATE_API_KEY: getValue('YODA_TRANSLATE_API_KEY'),
+        RATE_LIMITING_ENABLED: getValue('RATE_LIMITING_ENABLED') === 'true' ? true : false,
     }
 }
 
-const api = { isActive, getConfig, get }
+const api = { isActive, getConfig }
 
 export default api

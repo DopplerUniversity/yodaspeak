@@ -17,12 +17,15 @@ nunjucks.configure('src/views', {
     express: app,
 })
 
-app.use(logger(config.LOGGING))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 app.use(router)
 app.use(express.static(path.join(__dirname, 'public')))
+;(async () => {
+    const appConfig = await config.fetch()
+    app.use(logger(appConfig.LOGGING))
+})()
 
 export default app
