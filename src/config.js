@@ -1,21 +1,7 @@
 import fs from 'fs'
 import dotenv from 'dotenv'
 import colors from 'colors'
-import awsParamStore from 'aws-param-store'
-
-// Helper functions
-const awsParamStoreGet = key => {
-    try {
-        return awsParamStore.getParameterSync(`${process.env.AWS_SSM_PREFIX}${key}`, {
-            region: process.env.AWS_SSM_REGION,
-        }).Value
-    }
-    catch(err) {
-        console.error(colors.yellow(`[warning]: AWS Param Store: Failed to fetch key "${key}" in region "${process.env.AWS_SSM_REGION}"`))
-        console.error(colors.yellow(err))
-        return ''
-    }
-}
+import awsParamStore from './config/aws_param_store.js'
 
 let config = {}
 
@@ -26,27 +12,27 @@ if (process.env.DOPPLER_PROJECT || process.env.DOPPLER_ENCLAVE_PROJECT) {
     dotenv.config()
 }
 
-// Check for AWS Systems Manager Param Store usage
-if (process.env.AWS_SSM_ENABLED === 'true' && process.env.AWS_SSM_PREFIX && process.env.AWS_SSM_REGION) {
+// Check for AWS Param Store usage
+if (awsParamStore.isActive()) {
     console.log(
         colors.green(
-            '[info]: Using Doppler AWS Systems Manager Param Store integration for config',
+            '[info]: Using Doppler AWS Param Store integration for config',
             `prefix: ${process.env.AWS_SSM_PREFIX}`,
             `region: ${process.env.AWS_SSM_REGION}`
         )
     )
     config = {
-        LOGGING: awsParamStoreGet('LOGGING'),
-        HOSTNAME: awsParamStoreGet('HOSTNAME'),
-        PORT: awsParamStoreGet('PORT'),
-        TRANSLATE_ENDPOINT: awsParamStoreGet('TRANSLATE_ENDPOINT') || '/translate',
-        TLS_CERT: awsParamStoreGet('TLS_CERT'),
-        TLS_KEY: awsParamStoreGet('TLS_KEY'),
-        TLS_PORT: awsParamStoreGet('TLS_PORT'),
-        TRANSLATION_SUGGESTION: awsParamStoreGet('TRANSLATION_SUGGESTION'),
-        YODA_TRANSLATE_API_ENDPOINT: awsParamStoreGet('YODA_TRANSLATE_API_ENDPOINT'),
-        YODA_TRANSLATE_API_KEY: awsParamStoreGet('YODA_TRANSLATE_API_KEY'),
-        RATE_LIMITING_ENABLED: awsParamStoreGet('RATE_LIMITING_ENABLED') === 'true' ? true : false,
+        LOGGING: awsParamStore.get('LOGGING'),
+        HOSTNAME: awsParamStore.get('HOSTNAME'),
+        PORT: awsParamStore.get('PORT'),
+        TRANSLATE_ENDPOINT: awsParamStore.get('TRANSLATE_ENDPOINT') || '/translate',
+        TLS_CERT: awsParamStore.get('TLS_CERT'),
+        TLS_KEY: awsParamStore.get('TLS_KEY'),
+        TLS_PORT: awsParamStore.get('TLS_PORT'),
+        TRANSLATION_SUGGESTION: awsParamStore.get('TRANSLATION_SUGGESTION'),
+        YODA_TRANSLATE_API_ENDPOINT: awsParamStore.get('YODA_TRANSLATE_API_ENDPOINT'),
+        YODA_TRANSLATE_API_KEY: awsParamStore.get('YODA_TRANSLATE_API_KEY'),
+        RATE_LIMITING_ENABLED: awsParamStore.get('RATE_LIMITING_ENABLED') === 'true' ? true : false,
     }
 } else {
     config = {
