@@ -22,6 +22,8 @@
         }
     },
     "dependencies": {
+        "aws-param-store": "^3.2.0",
+        "aws-sdk": "^2.768.0",
         "axios": "^0.19.2",
         "colors": "^1.4.0",
         "cookie-parser": "~1.4.4",
