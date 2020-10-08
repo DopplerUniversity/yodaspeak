@@ -18,7 +18,7 @@ const PREDEFINED_TRANSLATIONS = {
     const appConfig = await config.fetch()
 
     if (appConfig.RATE_LIMITING_ENABLED) {
-        console.log(colors.green('[info]: rate limiting enabled'))
+        console.log(colors.green('[info]: Rate limiting enabled'))
     }
     const translationLimiter = rateLimit({
         windowMs: 60 * 60 * 1000,
@@ -43,12 +43,12 @@ const PREDEFINED_TRANSLATIONS = {
     })
 
     router.post('/translate', cors(), translationLimiter, (req, res) => {
-        console.log(colors.green(`[info]: tranlsate text "${req.body.text}"`))
+        console.log(colors.green(`[info]: Tranlsate text "${req.body.text}"`))
 
         // Predefined translations help showcase the app without an API key
         const predefinedTranslation = PREDEFINED_TRANSLATIONS[req.body.text.trim()]
         if (predefinedTranslation) {
-            console.log(colors.green(`[info]: translation returned from predefined list`))
+            console.log(colors.green(`[info]: Translation returned from predefined list`))
             return setTimeout(
                 () =>
                     res.json({
