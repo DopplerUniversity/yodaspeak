@@ -7,7 +7,7 @@ export HOME=/root
 export DOPPLER_TOKEN="${doppler_service_token}"
 export GIT_SHA="${git_sha}"
 
-# Add Doppler token to root env vars
+# Add Doppler token to root env vars. Mainly for remote testing purposes
 echo "export DOPPLER_TOKEN=${doppler_service_token}" >> $HOME/.bashrc
 
 # Add Doppler yum repo

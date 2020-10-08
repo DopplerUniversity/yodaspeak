@@ -39,6 +39,7 @@ async function fetch() {
         config = Object.freeze(awsSecretsManager.getConfig())
         return config
     } else {
+        console.log(colors.green(`[info]: Using Doppler configured env vars`))
         config = Object.freeze({
             LOGGING: process.env.LOGGING,
             HOSTNAME: process.env.HOSTNAME,
