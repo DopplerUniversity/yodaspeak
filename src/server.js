@@ -15,7 +15,7 @@ import app from './app.js'
         )
     })
 
-    if (appConfig.TLS_PORT && appConfig.TLS_CERT && appConfig.TLS_PORT) {
+    if (appConfig.TLS_PORT && appConfig.TLS_CERT) {
         httpsServer = https
             .createServer(
                 {
