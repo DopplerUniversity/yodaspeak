@@ -32,7 +32,7 @@ git checkout ${git_sha}
 npm clean-install --only=production --silent --no-audit
 
 # Persist Doppler service token
-doppler configure service token ${doppler_service_token}
+doppler configure set token ${doppler_service_token}
 
 # Pass secrets as environment vars to our application using `doppler run`
 # Run our application in a persistent background process
