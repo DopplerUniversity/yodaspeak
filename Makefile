@@ -37,10 +37,10 @@ prod-server-restart: prod-server-down prod-server-up
 ############
 
 docker-build:
-	docker image build -t dopplerhq/yodaspeak:latest .
+	docker image build --build-arg DOPPLER_TOKEN=$(DOPPLER_TOKEN) -t dopplerhq/yodaspeak:latest .
 
 docker-buildx:
-	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build -t dopplerhq/yodaspeak:latest .
+	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --build-arg DOPPLER_TOKEN=$(DOPPLER_TOKEN) -t dopplerhq/yodaspeak:latest .
 
 # Needs `DOPPLER_TOKEN` env var to fetch secrets from Doppler's API
 # Learn more at https://docs.doppler.com/docs/enclave-service-tokens
@@ -48,7 +48,6 @@ docker-buildx:
 docker-run:
 	docker container run \
 		-it \
-		--init \
 		--rm \
 		-d \
 		--name yodaspeak \
@@ -59,7 +58,6 @@ docker-run:
 docker-run-dev:
 	docker container run \
 		-it \
-		--init \
 		--rm \
 		--name yodaspeak \
 		-e "DOPPLER_TOKEN=$(shell doppler configure get token --plain)" \

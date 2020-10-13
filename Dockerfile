@@ -21,8 +21,11 @@ EXPOSE 3000
 
 HEALTHCHECK --interval=5s --timeout=5s --retries=3 CMD wget http://localhost:3000/healthz -q -O - > /dev/null 2>&1
 
-# DOPPLER_TOKEN required at runtime for read-only access to specific config
-ENV DOPPLER_TOKEN ${DOPPLER_TOKEN}
+# Pass `DOPPLER_TOKEN` at build time to create an encrypted snapshot for high-availability
+# Only use for local manual builds for learning and testing purposes
+ARG DOPPLER_TOKEN
+ENV DOPPLER_TOKEN $DOPPLER_TOKEN
+RUN [ -z "$DOPPLER_TOKEN" ] && : || doppler run -- echo "Creating encrypted snapshot fallback"
 
 ENTRYPOINT ["doppler", "run", "--"]
 CMD ["npm", "start"]
