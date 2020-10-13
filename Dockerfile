@@ -3,11 +3,12 @@ FROM node:14-alpine
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 LABEL maintainer="Ryan Blunden <ryan.blunden@doppler.com>"
 
-# Must be supplied at runtime in order for Docker to retrieve secrets
-ENV DOPPLER_TOKEN ${DOPPLER_TOKEN}
+# Ensure DNS resolution works everywhere
+# See https://github.com/gliderlabs/docker-alpine/issues/539#issuecomment-607159184
+RUN apk add --no-cache bind-tools
 
 # Install the Doppler CLI
-RUN wget -qO- https://cli.doppler.com/install.sh | sh
+RUN (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh
 
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
@@ -16,4 +17,12 @@ COPY . .
 
 USER node
 
-CMD ["doppler", "run", "--", "npm", "start"]
+EXPOSE 3000
+
+HEALTHCHECK --interval=5s --timeout=5s --retries=3 CMD wget http://localhost:3000/healthz -q -O - > /dev/null 2>&1
+
+# DOPPLER_TOKEN required at runtime for read-only access to specific config
+ENV DOPPLER_TOKEN ${DOPPLER_TOKEN}
+
+ENTRYPOINT ["doppler", "run", "--"]
+CMD ["npm", "start"]

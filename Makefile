@@ -44,8 +44,31 @@ docker-buildx:
 
 # Needs `DOPPLER_TOKEN` env var to fetch secrets from Doppler's API
 # Learn more at https://docs.doppler.com/docs/enclave-service-tokens
+# usage: make docker-run-prod DOPPLER_TOKEN=dp.st.XXXX
 docker-run:
-	docker container run -it --rm -e DOPPLER_TOKEN=$(DOPPLER_TOKEN) -p 3000:3000 dopplerhq/yodaspeak:latest
+	docker container run \
+		-it \
+		--init \
+		--rm \
+		-d \
+		--name yodaspeak \
+		-e DOPPLER_TOKEN=$(DOPPLER_TOKEN) \
+		-p 3000:3000 dopplerhq/yodaspeak:latest
+
+# You've configured Doppler locally using `docker setup` and want to use that configuration for running the yodaspeak container
+docker-run-dev:
+	docker container run \
+		-it \
+		--init \
+		--rm \
+		--name yodaspeak \
+		-e "DOPPLER_TOKEN=$(shell doppler configure get token --plain)" \
+		-e "DOPPLER_PROJECT=$(shell doppler configure get project --plain)" \
+		-e "DOPPLER_CONFIG=$(shell doppler configure get config --plain)" \
+		-p 3000:3000 \
+		dopplerhq/yodaspeak:latest
+
+
 
 
 ###############
