@@ -5,6 +5,6 @@ apk add make
 echo '[info]: Installing development dependencies'
 cp package.json -f ../
 cd ../
-npm install --also=dev && cd ./app
+npm install --only=dev && cd ./app
 export PATH=$PATH:/usr/src/node_modules/.bin
 echo '[info]: Development environment configured'
