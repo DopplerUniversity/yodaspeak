@@ -37,15 +37,16 @@ prod-server-restart: prod-server-down prod-server-up
 ############
 
 CONTAINER_NAME=yodaspeak
+IMAGE_NAME=dopplerhq/yodaspeak
 
 # Requires a `YODASPEAK_SERVICE_TOKEN` environment variable
 # Learn more at https://docs.doppler.com/docs/enclave-service-tokens
 
 docker-build:
-	docker image build --build-arg DOPPLER_TOKEN=$(DOPPLER_TOKEN) -t dopplerhq/yodaspeak:latest .
+	docker image build --build-arg DOPPLER_TOKEN=$(DOPPLER_TOKEN) -t $(IMAGE_NAME):latest .
 
 docker-buildx:
-	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --build-arg DOPPLER_TOKEN=$(DOPPLER_TOKEN) -t dopplerhq/yodaspeak:latest .
+	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --build-arg DOPPLER_TOKEN=$(DOPPLER_TOKEN) -t $(IMAGE_NAME):latest .
 
 docker-run:
 	docker container run \
@@ -54,7 +55,7 @@ docker-run:
 		-d \
 		--name $(CONTAINER_NAME) \
 		-e DOPPLER_TOKEN=${YODASPEAK_SERVICE_TOKEN} \
-		-p 3000:3000 dopplerhq/yodaspeak:latest
+		-p 3000:3000 $(IMAGE_NAME):latest
 
 docker-run-dev:
 	docker container run \
@@ -65,7 +66,7 @@ docker-run-dev:
 		-u root \
 		-p 3443:3443 \
 		-p 3000:3000 \
-		dopplerhq/yodaspeak:latest \
+		$(IMAGE_NAME):latest \
 		/bin/sh -c '. ./bin/docker-dev-setup.sh && sh'
 
 
@@ -118,7 +119,7 @@ heroku-deploy:
 	heroku open --app $(HEROKU_APP)
 
 heroku-clear-doppler-vars:
-	heroku config:unset --app $(HEROKU_APP) DOPPLER_ENCLAVE_CONFIG DOPPLER_CONFIG DOPPLER_ENCLAVE_ENVIRONMENT DOPPLER_ENVIRONMENT DOPPLER_ENCLAVE_$(PROJECT) DOPPLER_$(PROJECT)
+	heroku config:unset --app $(HEROKU_APP) DOPPLER_ENCLAVE_CONFIG DOPPLER_CONFIG DOPPLER_ENCLAVE_ENVIRONMENT DOPPLER_ENVIRONMENT DOPPLER_ENCLAVE_PROJECT DOPPLER_PROJECT
 
 heroku-destroy:
 	heroku domains:clear --app $(HEROKU_APP)
