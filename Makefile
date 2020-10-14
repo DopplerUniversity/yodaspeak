@@ -36,16 +36,38 @@ prod-server-restart: prod-server-down prod-server-up
 #  Docker  #
 ############
 
+CONTAINER_NAME=yodaspeak
+IMAGE_NAME=dopplerhq/yodaspeak
+
+# Requires a `YODASPEAK_SERVICE_TOKEN` environment variable
+# Learn more at https://docs.doppler.com/docs/enclave-service-tokens
+
 docker-build:
-	docker image build -t dopplerhq/yodaspeak:latest .
+	docker image build --build-arg DOPPLER_TOKEN=$(DOPPLER_TOKEN) -t $(IMAGE_NAME):latest .
 
 docker-buildx:
-	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build -t dopplerhq/yodaspeak:latest .
+	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --build-arg DOPPLER_TOKEN=$(DOPPLER_TOKEN) -t $(IMAGE_NAME):latest .
 
-# Needs `DOPPLER_TOKEN` env var to fetch secrets from Doppler's API
-# Learn more at https://docs.doppler.com/docs/enclave-service-tokens
 docker-run:
-	docker container run -it --rm -e DOPPLER_TOKEN=$(DOPPLER_TOKEN) -p 3000:3000 dopplerhq/yodaspeak:latest
+	docker container run \
+		-it \
+		--rm \
+		-d \
+		--name $(CONTAINER_NAME) \
+		-e DOPPLER_TOKEN=${YODASPEAK_SERVICE_TOKEN} \
+		-p 3000:3000 $(IMAGE_NAME):latest
+
+docker-run-dev:
+	docker container run \
+		-it \
+		--name $(CONTAINER_NAME) \
+		--rm 		-e DOPPLER_TOKEN=${YODASPEAK_SERVICE_TOKEN} \
+		-v $(shell pwd):/usr/src/app:cached \
+		-u root \
+		-p 3443:3443 \
+		-p 3000:3000 \
+		$(IMAGE_NAME):latest \
+		/bin/sh -c '. ./bin/docker-dev-setup.sh && sh'
 
 
 ###############
