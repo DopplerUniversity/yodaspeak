@@ -39,14 +39,11 @@ prod-server-restart: prod-server-down prod-server-up
 CONTAINER_NAME=yodaspeak
 IMAGE_NAME=dopplerhq/yodaspeak
 
-# Requires a `YODASPEAK_SERVICE_TOKEN` environment variable
-# Learn more at https://docs.doppler.com/docs/enclave-service-tokens
-
 docker-build:
-	docker image build --build-arg DOPPLER_TOKEN=$(DOPPLER_TOKEN) -t $(IMAGE_NAME):latest .
+	docker image build -t $(IMAGE_NAME):latest .
 
 docker-buildx:
-	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --build-arg DOPPLER_TOKEN=$(DOPPLER_TOKEN) -t $(IMAGE_NAME):latest .
+	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build -t $(IMAGE_NAME):latest .
 
 docker-run:
 	docker container run \
