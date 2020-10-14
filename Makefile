@@ -58,7 +58,8 @@ docker-run-dev:
 	docker container run \
 		-it \
 		--name $(CONTAINER_NAME) \
-		--rm 		-e DOPPLER_TOKEN=${YODASPEAK_SERVICE_TOKEN} \
+		--rm \
+		-e DOPPLER_TOKEN=${YODASPEAK_SERVICE_TOKEN} \
 		-v $(shell pwd):/usr/src/app:cached \
 		-u root \
 		-p 3443:3443 \
