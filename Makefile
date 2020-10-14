@@ -36,6 +36,8 @@ prod-server-restart: prod-server-down prod-server-up
 #  Docker  #
 ############
 
+CONTAINER_NAME=yodaspeak
+
 docker-build:
 	docker image build --build-arg DOPPLER_TOKEN=$(DOPPLER_TOKEN) -t dopplerhq/yodaspeak:latest .
 
@@ -50,24 +52,36 @@ docker-run:
 		-it \
 		--rm \
 		-d \
-		--name yodaspeak \
-		-e DOPPLER_TOKEN=$(DOPPLER_TOKEN) \
+		--name $(CONTAINER_NAME) \
+		-e DOPPLER_TOKEN=${YODASPEAK_SERVICE_TOKEN} \
 		-p 3000:3000 dopplerhq/yodaspeak:latest
 
-# You've configured Doppler locally using `docker setup` and want to use that configuration for running the yodaspeak container
-docker-run-dev:
+# Requires a `YODASPEAK_SERVICE_TOKEN` environment variable
+docker-dev-init:
 	docker container run \
 		-it \
-		--rm \
-		--name yodaspeak \
-		-e "DOPPLER_TOKEN=$(shell doppler configure get token --plain)" \
-		-e "DOPPLER_PROJECT=$(shell doppler configure get project --plain)" \
-		-e "DOPPLER_CONFIG=$(shell doppler configure get config --plain)" \
+		--name $(CONTAINER_NAME) \
+		-e DOPPLER_TOKEN=${YODASPEAK_SERVICE_TOKEN} \
+		-v $(shell pwd):/usr/src/app:cached \
+		-u root \
+		-p 3443:3443 \
 		-p 3000:3000 \
-		dopplerhq/yodaspeak:latest
+		--restart unless-stopped \
+		dopplerhq/yodaspeak:latest \
+		/bin/sh -c '. ./bin/docker-dev-setup.sh && sh'
 
+docker-dev-start:
+	docker container start $(CONTAINER_NAME)
+	$(MAKE) docker-dev-attach
 
+docker-dev-attach:
+	docker container attach $(CONTAINER_NAME)
 
+docker-dev-exec:
+	docker container exec -it $(CONTAINER_NAME) sh
+
+docker-dev-stop:
+	docker container rm -f $(CONTAINER_NAME)
 
 ###############
 #  UTILITIES  #
@@ -118,7 +132,7 @@ heroku-deploy:
 	heroku open --app $(HEROKU_APP)
 
 heroku-clear-doppler-vars:
-	heroku config:unset --app $(HEROKU_APP) DOPPLER_ENCLAVE_CONFIG DOPPLER_CONFIG DOPPLER_ENCLAVE_ENVIRONMENT DOPPLER_ENVIRONMENT DOPPLER_ENCLAVE_PROJECT DOPPLER_PROJECT
+	heroku config:unset --app $(HEROKU_APP) DOPPLER_ENCLAVE_CONFIG DOPPLER_CONFIG DOPPLER_ENCLAVE_ENVIRONMENT DOPPLER_ENVIRONMENT DOPPLER_ENCLAVE_$(PROJECT) DOPPLER_$(PROJECT)
 
 heroku-destroy:
 	heroku domains:clear --app $(HEROKU_APP)
