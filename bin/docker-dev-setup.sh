@@ -7,4 +7,4 @@ cp package.json -f ../
 cd ../
 npm install --also=dev && cd ./app
 export PATH=$PATH:/usr/src/node_modules/.bin
-echo '[info]: Developent environment configured.'
+echo '[info]: Development environment configured'
