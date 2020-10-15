@@ -10,7 +10,7 @@ import app from './app.js'
     const PORT = appConfig.PORT || 3000
 
     const onShutdown = code => {
-        console.log(colors.green(`\n[info]: Recieved "${code}"`))
+        console.log(colors.green(`\n[info]: Received "${code}"`))
         console.log(colors.green(`[info]: Shutting down HTTP server`))
         httpServer.close()
 
