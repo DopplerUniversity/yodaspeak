@@ -10,10 +10,10 @@
     "type": "module",
     "scripts": {
         "start": "node ./src/server",
+        "local": "nodemon ./src/server",
         "lint": "eslint --fix --quiet",
         "format": "prettier --write --loglevel error .",
-        "build-static": "node ./src/build.js",
-        "doppler-cloud-install-standalone": "wget -q https://github.com/DopplerHQ/cli/releases/download/3.13.0/doppler_3.13.0_linux_amd64.tar.gz && tar -xf doppler_3.13.0_linux_amd64.tar.gz && rm doppler_3.13.0_linux_amd64.tar.gz && chmod +x ./doppler && ./doppler --version"
+        "build-static": "node ./src/build.js"
     },
     "nodemonConfig": {
         "ext": "*.js,*.css,*.nunjucks",

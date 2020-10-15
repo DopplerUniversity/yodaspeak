@@ -49,23 +49,42 @@ docker-run:
 	docker container run \
 		-it \
 		--rm \
+		--init \
 		-d \
 		--name $(CONTAINER_NAME) \
 		-e DOPPLER_TOKEN=${YODASPEAK_SERVICE_TOKEN} \
-		-p 3000:3000 $(IMAGE_NAME):latest
+		-p 3000:3000 \
+		-p 3443:3443 \
+		$(IMAGE_NAME):latest
 
+docker-compose-up:
+	docker-compose up
+
+docker-compose-dev:
+	DOPPLER_TOKEN="$(shell doppler configure get token --plain)" \
+	DOPPLER_PROJECT="$(shell doppler configure get project --plain)" \
+	DOPPLER_CONFIG="$(shell doppler configure get config --plain)" \
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up; docker-compose rm -fsv
+
+# Required to install dev dependencies
 docker-run-dev:
 	docker container run \
 		-it \
+		--init \
 		--name $(CONTAINER_NAME) \
 		--rm \
-		-e DOPPLER_TOKEN=${YODASPEAK_SERVICE_TOKEN} \
+		-e "DOPPLER_TOKEN=$(shell doppler configure get token --plain)" \
+		-e "DOPPLER_PROJECT=$(shell doppler configure get project --plain)" \
+		-e "DOPPLER_CONFIG=$(shell doppler configure get config --plain)" \
 		-v $(shell pwd):/usr/src/app:cached \
 		-u root \
 		-p 3443:3443 \
 		-p 3000:3000 \
 		$(IMAGE_NAME):latest \
-		/bin/sh -c '. ./bin/docker-dev-setup.sh && sh'
+		./bin/docker-dev-command.sh
+
+docker-shell:
+	docker container exec -it $(CONTAINER_NAME) sh
 
 
 ###############
