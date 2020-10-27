@@ -109,13 +109,13 @@ resource "aws_security_group" "this" {
 # ------------------------------------------
 
 resource "aws_iam_role" "this" {
-  name                = "${var.app_name}-role"
-  assume_role_policy  = file("${path.module}/resources/iam-policy-instance-assume-role.json")
+  name               = "${var.app_name}-role"
+  assume_role_policy = file("${path.module}/resources/iam-policy-instance-assume-role.json")
 }
 
 resource "aws_iam_policy" "this" {
-  name    = "${var.app_name}-access-policy"
-  policy   = file("${path.module}/resources/ec2-role-access-policy.json")
+  name   = "${var.app_name}-access-policy"
+  policy = file("${path.module}/resources/ec2-role-access-policy.json")
 }
 
 resource "aws_iam_role_policy_attachment" "this" {
@@ -134,18 +134,17 @@ resource "aws_iam_instance_profile" "this" {
 # ------------------------------------------
 
 resource "aws_instance" "this" {
-  ami           = data.aws_ami.this.id
-  instance_type = var.instance_type
-  vpc_security_group_ids = [
-  "${aws_security_group.this.id}"]
+  ami                         = data.aws_ami.this.id
+  instance_type               = var.instance_type
+  vpc_security_group_ids      = [aws_security_group.this.id]
   subnet_id                   = var.subnet_id
   associate_public_ip_address = true
   key_name                    = var.key_name
   iam_instance_profile        = aws_iam_instance_profile.this.name
-  user_data                   = templatefile("${path.module}/resources/amazon-linux2.sh", { doppler_service_token = "${var.doppler_service_token}", git_sha = "${var.git_sha}" })
+  user_data                   = templatefile("${path.module}/resources/amazon-linux2.sh", { doppler_service_token = var.doppler_service_token, git_sha = var.git_sha })
 
   tags = {
-    Name = "${var.app_name}"
+    Name = var.app_name
   }
 
   lifecycle {
