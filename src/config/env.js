@@ -1,6 +1,5 @@
 import fs from 'fs'
 import dotenv from 'dotenv'
-import colors from 'colors'
 import log from '../log.js'
 
 const getConfig = () => {

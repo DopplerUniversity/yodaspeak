@@ -1,6 +1,5 @@
 import fs from 'fs'
 import ncp from 'ncp'
-import colors from 'colors'
 import nunjucks from 'nunjucks'
 import config from './config.js'
 import log from './log.js'

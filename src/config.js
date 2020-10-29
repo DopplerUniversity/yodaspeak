@@ -1,6 +1,5 @@
 import fs from 'fs'
 import dotenv from 'dotenv'
-import colors from 'colors'
 import log from './log.js'
 import env from './config/env.js'
 import awsParamStore from './config/aws-param-store.js'

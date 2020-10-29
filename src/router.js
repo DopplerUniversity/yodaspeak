@@ -3,7 +3,6 @@ import cors from 'cors'
 import axios from 'axios'
 import express from 'express'
 import rateLimit from 'express-rate-limit'
-import colors from 'colors'
 import log from './log.js'
 
 let router

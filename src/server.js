@@ -1,6 +1,5 @@
 import http from 'http'
 import https from 'https'
-import colors from 'colors'
 import log from './log.js'
 import getConfig from './config.js'
 import getApp from './app.js'
