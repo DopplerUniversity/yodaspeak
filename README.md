@@ -81,54 +81,16 @@ You can use Docker to run the app in the same way you would in production with a
 
 > NOTE: If you change the value for `PORT` in Doppler, then you'll need to update the port binding in the `docker container run` command to match. For example, if `PORT` were changed to `8080`, then it would be `-p 8080:8080`.
 
-### Running in production mode with a service token
-
 Using Docker requires a [Doppler service token](https://docs.doppler.com/docs/enclave-service-tokens) for a config populated with the secrets in the [sample.env file](sample.env), as all secrets will be fetched at runtime.
 
-To run the Yoda Speak Docker container, run:
+To run the Yoda Speak Docker container:
 
 ```sh
- docker container run -it --rm -e DOPPLER_TOKEN="dp.st.xxx" -p 3000:3000 dopplerhq/yodaspeak:latest
+ docker container run -it --rm --init -e DOPPLER_TOKEN="dp.st.xxx" -p 3000:3000 dopplerhq/yodaspeak:latest
 ```
 
-### Running in development mode
+> NOTE: Check out the Docker specific commands in the `Makefile` for both Docker and Docker Compose.
 
-To run the Yoda Speak container in development mode, we will execute a shell instead of the `doppler run` command so we can authenticate from and configure Doppler within the container, then start the server manually.
-
-```sh
-# Run the container with a shell
-docker container run -it --rm -p 3000:3000 dopplerhq/yodaspeak:latest sh
-```
-
-> NOTE: All of the below commands are to be executed inside the running container
-
-Now authenticate from within the container:
-
-```sh
-# Manually copy the auth code
-doppler login
-```
-
-Once you've authenticated and created the token for your user, now configure Doppler to access the correct project and config:
-
-```sh
-doppler setup
-```
-
-Now you're ready to run the server manually:
-
-```sh
-doppler run -- npm start
-```
-
-You should now be able to access the app from your browser at [http://localhost:3000/](http://localhost:3000/)
-
-## Deploying
-
-Yoda Speak currently has deployment guides for the following platforms:
-
--   [Render](docs/deploying-render.md)
-
-## Having trouble getting the app working?
+## Having trouble?
 
 Create a GitHub issue, including your OS and Node version, and we'll help you out!
