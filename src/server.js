@@ -1,44 +1,42 @@
 import http from 'http'
 import https from 'https'
 import colors from 'colors'
-import config from './config.js'
-import app from './app.js'
+import log from './log.js'
+import getConfig from './config.js'
+import getApp from './app.js'
 ;(async () => {
     let httpServer, httpsServer
-    const appConfig = await config.fetch()
-    const HOST = appConfig.HOSTNAME || '0.0.0.0'
-    const PORT = appConfig.PORT || 3000
+    const config = await getConfig()
+    const app = getApp(config)
+    const HOST = config.HOSTNAME || '0.0.0.0'
+    const PORT = config.PORT || 3000
 
     const onShutdown = code => {
-        console.log(colors.green(`\n[info]: Received "${code}"`))
-        console.log(colors.green(`[info]: Shutting down HTTP server`))
+        log(`\nReceived "${code}"`)
+        log(`Shutting down HTTP server`)
         httpServer.close()
 
         if (httpsServer) {
-            console.log(colors.green(`[info]: Shutting down HTTPS server`))
+            log(`Shutting down HTTPS server`)
             httpsServer.close()
         }
     }
 
     httpServer = http.createServer(app).listen(PORT, HOST, () => {
-        console.log(colors.green(`[info]: HTTP server at http://${HOST}:${PORT}/ (Press CTRL+C to quit)`))
+        log(`HTTP server at http://${HOST}:${PORT}/ (Press CTRL+C to quit)`)
     })
 
-    if (appConfig.TLS_PORT && appConfig.TLS_CERT) {
+    if (config.TLS_PORT && config.TLS_CERT) {
         httpsServer = https
             .createServer(
                 {
-                    cert: appConfig.TLS_CERT,
-                    key: appConfig.TLS_KEY,
+                    cert: config.TLS_CERT,
+                    key: config.TLS_KEY,
                 },
                 app
             )
-            .listen(appConfig.TLS_PORT, HOST, () => {
-                console.log(
-                    colors.green(
-                        `[info]: HTTPS server at https://${HOST}:${appConfig.TLS_PORT}/ (Press CTRL+C to quit)`
-                    )
-                )
+            .listen(config.TLS_PORT, HOST, () => {
+                log(`HTTPS server at https://${HOST}:${config.TLS_PORT}/ (Press CTRL+C to quit)`)
             })
     }
 

@@ -2,8 +2,8 @@ import fs from 'fs'
 import ncp from 'ncp'
 import colors from 'colors'
 import nunjucks from 'nunjucks'
-
 import config from './config.js'
+import log from './log.js'
 
 const DIST_DIR = './dist'
 
@@ -29,5 +29,5 @@ ncp('./src/public', DIST_DIR, function (err) {
         return console.error(err)
     }
 
-    console.log(colors.green(`[info]: Static files saved to ${DIST_DIR}`))
+    log(`Static files saved to ${DIST_DIR}`)
 })
