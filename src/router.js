@@ -1,4 +1,3 @@
-import https from 'https'
 import cors from 'cors'
 import axios from 'axios'
 import express from 'express'
@@ -13,7 +12,6 @@ const getRouter = config => {
     }
 
     router = express.Router()
-    const app = express()
     const PREDEFINED_TRANSLATIONS = {
         'Secrets must not be stored in git repositories': 'Stored in git repositories, secrets must not be',
         'master obi-wan has learnt the power of secrets management':

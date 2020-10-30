@@ -13,7 +13,8 @@
         "local": "nodemon ./src/server",
         "lint": "eslint --fix --quiet",
         "format": "prettier --write --loglevel error .",
-        "build-static": "node ./src/build.js"
+        "build-static": "node ./src/build.js",
+        "serve-static": "node ./src/static-server.js "
     },
     "nodemonConfig": {
         "ext": "*.js,*.css,*.nunjucks",

@@ -1,10 +1,11 @@
 import fs from 'fs'
 import ncp from 'ncp'
 import nunjucks from 'nunjucks'
-import config from './config.js'
 import log from './log.js'
 
 const DIST_DIR = './dist'
+const TRANSLATE_ENDPOINT = process.env.TRANSLATE_ENDPOINT
+const TRANSLATION_SUGGESTION = process.env.TRANSLATION_SUGGESTION
 
 nunjucks.configure('src/views', {
     autoescape: true,
@@ -18,8 +19,8 @@ fs.mkdirSync(DIST_DIR)
 fs.writeFileSync(
     'dist/index.html',
     nunjucks.render('index.nunjucks', {
-        translationEndpoint: config.TRANSLATE_ENDPOINT,
-        translationSuggestion: config.TRANSLATION_SUGGESTION,
+        translationEndpoint: TRANSLATE_ENDPOINT,
+        translationSuggestion: TRANSLATION_SUGGESTION,
     })
 )
 
