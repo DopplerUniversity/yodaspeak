@@ -1,3 +1,3 @@
 run="doppler run -- npm start"
-language="node"
+language="Node.js"
 onBoot="echo 'Run `. ./yodaspeak/bin/setup-replit.sh` to configure Repl.it environment"
