@@ -1,1 +1,1 @@
-onBoot="echo 'Run `. ./yodaspeak/bin/setup-replit.sh` to configure Repl.it environment'"
+run="$(npm bin)/doppler run -- $(npm bin)/node src/server.js"

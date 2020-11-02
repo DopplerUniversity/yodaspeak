@@ -93,6 +93,29 @@ To run the Yoda Speak Docker container:
 
 > NOTE: Check out the Docker specific commands in the `Makefile` for both Docker and Docker Compose.
 
+## Using Repl.it
+
+[![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://repl.it/github/dopplerhq/yodaspeak)
+
+> NOTE: This is a work in progress and feedback is greatly appreciated!
+
+You can quickly and easily run [YodaSpeak on repl.it](ttps://repl.it/github/dopplerhq/yodaspeak) by following the below steps once your environment has booted up:
+
+1. If you haven't already, create a `yodaspeak` project in [Doppler](https://dashboard.doppler.com/), using the contents of the `sample.env` file to populate the initial set of secrets
+2. Create a [Service Token](https://docs.doppler.com/docs/enclave-service-tokens) that will be used for fetching secrets in your repl.it environment
+3. Now install and configure all required dependencies by running:
+
+```sh
+# You'll need to paste your Doppler Service Token when prompted
+. ./bin/setup-replit.sh
+```
+
+Once setup, you can then start the server by clicking the **Run** button, or manually by running:
+
+```sh
+$(npm bin)/doppler run -- $(npm bin)/node src/server.js
+```
+
 ## Having trouble?
 
 Create a GitHub issue, including your OS and Node version, and we'll help you out!
