@@ -30,4 +30,4 @@ doppler setup --silent --token $doppler_token
 doppler configs
 
 echo '[info]: Repl.it configured!'
-echo '[info]: Start server by running: doppler run -- npm start'
+echo '[info]: Starting the server with command `doppler run -- npm start`'
