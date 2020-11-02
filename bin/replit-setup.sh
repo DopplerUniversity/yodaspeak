@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Configures a Repl.it environment
-# Usage: . ./bin/setup-replit.sh
+# Usage: . ./bin/replit-setup.sh
 
 echo '[info]: Configure $PATH to include npm bin for Node override'
 export PATH=$(npm bin):$PATH
@@ -12,7 +12,7 @@ node --version
 
 echo '[info]: Installing Doppler CLI'
 wget https://github.com/DopplerHQ/cli/releases/download/3.16.0/doppler_3.16.0_linux_amd64.tar.gz
-tar -xzf doppler_3.16.0_linux_amd64.tar.gz
+tar -xzf doppler_3.16.0_linux_amd64.tar.gz doppler
 rm doppler_3.16.0_linux_amd64.tar.gz
 chmod +x doppler
 mv doppler $(npm bin)
@@ -27,5 +27,5 @@ read -p 'Enter Doppler Service Token for yodaspeak project: ' doppler_token
 doppler setup --silent --token $doppler_token
 doppler configs
 
-echo '[info]: Repl.it configured!'
-echo '[info]: Starting the server with command `doppler run -- npm start`'
+echo '[info]: Repl.it environment configured!'
+echo '[info]: You can now start the server with `./bin/replit-start.sh`'

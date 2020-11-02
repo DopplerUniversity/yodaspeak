@@ -1,0 +1,3 @@
+language = "nodejs"
+run = "./bin/replit-start.sh"
+onBoot="echo 'Run `. ./bin/replit-setup.sh` to install and configure all dependencies'"

@@ -105,13 +105,13 @@ You can quickly and easily run [YodaSpeak on repl.it](ttps://repl.it/github/dopp
 
 ```sh
 # You'll need to paste your Doppler Service Token when prompted
-. ./bin/setup-replit.sh
+. ./bin/replit-setup.sh
 ```
 
 Once setup, you can then start the server by clicking the **Run** button, or manually by running:
 
 ```sh
-$(npm bin)/doppler run -- $(npm bin)/node src/server.js
+./bin/replit-start.sh
 ```
 
 ## Having trouble?
