@@ -1,4 +1,4 @@
-  FROM node:lts-alpine
+FROM node:lts-alpine
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 LABEL maintainer="Ryan Blunden <ryan.blunden@doppler.com>"

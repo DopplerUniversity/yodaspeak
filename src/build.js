@@ -29,5 +29,5 @@ ncp('./src/public', DIST_DIR, function (err) {
         return console.error(err)
     }
 
-    log(`Static files saved to ${DIST_DIR}`)
+    log(`Build saved to ${DIST_DIR}`)
 })
