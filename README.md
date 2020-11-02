@@ -1,7 +1,5 @@
 # Yoda Speak
 
-[![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://repl.it/github/dopplerhq/yodaspeak)
-
 [![](./src/public/img/screenshot.jpg)](https://yodaspeak.io/)
 
 A simple application to translate English into Yoda's version, which is mostly, back to front, or, in other words, [object–subject–verb](https://en.wikipedia.org/wiki/Object%E2%80%93subject%E2%80%93verb) word order.
