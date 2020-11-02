@@ -1,9 +1,7 @@
 #!/bin/sh
 
 # Configures a Repl.it environment
-# Usage: . ./yodaspeak/bin/setup-replit.sh
-
-cd yodaspeak
+# Usage: . ./bin/setup-replit.sh
 
 echo '[info]: Configure $PATH to include npm bin for Node override'
 export PATH=$(npm bin):$PATH
