@@ -44,7 +44,6 @@ class App {
             })
             .catch(error => {
                 reveal('Sorry, am I, as translate your message, I cannot.')
-                console.error('Failed to fetch API response', error)
             })
     }
 }

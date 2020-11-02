@@ -8,8 +8,8 @@ It's designed to show how to use the [Doppler Universal Secrets Manager](https:/
 
 ## Requirements
 
-- [Doppler CLI](https://docs.doppler.com/docs/enclave-installation)
-- Node 14+
+-   [Doppler CLI](https://docs.doppler.com/docs/enclave-installation)
+-   Node 14+
 
 If on macOS, you can install these by running:
 
