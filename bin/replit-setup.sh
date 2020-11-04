@@ -11,10 +11,7 @@ npm install node@14
 node --version
 
 echo '[info]: Installing Doppler CLI'
-wget https://github.com/DopplerHQ/cli/releases/download/3.16.0/doppler_3.16.0_linux_amd64.tar.gz
-tar -xzf doppler_3.16.0_linux_amd64.tar.gz doppler
-rm doppler_3.16.0_linux_amd64.tar.gz
-chmod +x doppler
+(curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh -s -- --no-install --no-package-manager
 mv doppler $(npm bin)
 doppler --version
 
