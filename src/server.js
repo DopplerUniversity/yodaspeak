@@ -7,8 +7,6 @@ import getApp from './app.js'
     let httpServer, httpsServer
     const config = await getConfig()
     const app = getApp(config)
-    const HOST = config.HOSTNAME || '0.0.0.0'
-    const PORT = config.PORT || 3000
 
     const onShutdown = code => {
         log(`\nReceived "${code}"`)
@@ -21,8 +19,8 @@ import getApp from './app.js'
         }
     }
 
-    httpServer = http.createServer(app).listen(PORT, HOST, () => {
-        log(`HTTP server at http://${HOST}:${PORT}/ (Press CTRL+C to quit)`)
+    httpServer = http.createServer(app).listen(config.PORT, config.HOSTNAME, () => {
+        log(`HTTP server at http://${config.HOSTNAME}:${config.PORT}/ (Press CTRL+C to quit)`)
     })
 
     if (config.TLS_PORT && config.TLS_CERT) {
@@ -34,7 +32,7 @@ import getApp from './app.js'
                 },
                 app
             )
-            .listen(config.TLS_PORT, HOST, () => {
+            .listen(config.TLS_PORT, config.HOSTNAME, () => {
                 log(`HTTPS server at https://${HOST}:${config.TLS_PORT}/ (Press CTRL+C to quit)`)
             })
     }

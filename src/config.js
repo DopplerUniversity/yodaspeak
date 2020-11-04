@@ -1,38 +1,42 @@
-import fs from 'fs'
-import dotenv from 'dotenv'
 import log from './log.js'
 import env from './config/env.js'
+import spawn from 'child_process'
 import awsParamStore from './config/aws-param-store.js'
 import awsSecretsManager from './config/aws-secrets-manager.js'
 
 let config = null
+
+const setConfig = newConfig => {
+    config = newConfig
+    if (process.env.DOPPLER_PROJECT) {
+        log(`Doppler used for configuration: ${process.env.DOPPLER_PROJECT} > ${process.env.DOPPLER_CONFIG}`)
+    }
+
+    log('App Config')
+    log.table(config)
+
+    return config
+}
 
 const getConfig = async () => {
     if (config) {
         return config
     }
 
-    if (process.env.DOPPLER_PROJECT || process.env.DOPPLER_ENCLAVE_PROJECT) {
-        log(`Doppler environment detected: ${process.env.DOPPLER_PROJECT} > ${process.env.DOPPLER_CONFIG}`)
-    }
-
     if (awsParamStore.isActive()) {
         log(`Using Doppler AWS Param Store integration: ${process.env.AWS_SSM_PREFIX} > ${process.env.AWS_SSM_REGION}`)
-        config = Object.freeze(awsParamStore.getConfig())
-        return config
+        return setConfig(Object.freeze(awsParamStore.getConfig()))
     }
 
     if (awsSecretsManager.isActive()) {
         log(
             `Using Doppler AWS Secrets Manager integration: ${process.env.AWS_SECRETS_MANAGER_KEY} > ${process.env.AWS_SECRETS_MANAGER_REGION}`
         )
-        config = Object.freeze(awsSecretsManager.getConfig())
-        return config
+        return setConfig(Object.freeze(awsSecretsManager.getConfig()))
     }
 
     // Catch-all
-    config = Object.freeze(env.getConfig())
-    return config
+    return setConfig(Object.freeze(env.getConfig()))
 }
 
 export default getConfig

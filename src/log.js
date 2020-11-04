@@ -13,4 +13,16 @@ const log = (message, type = 'info') => {
     }
 }
 
+log.table = obj => {
+    let table = []
+    Object.keys(obj).forEach(key => {
+        let value = obj[key] ? obj[key] : ''
+        if (key.match(/KEY|TOKEN|SECRET|CERT/)) {
+            value = value.length > 0 ? '*'.repeat(12) : ''
+        }
+        table.push({ KEY: key, VALUE: value })
+    })
+    console.table(table)
+}
+
 export default log

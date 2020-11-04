@@ -3,8 +3,8 @@ import dotenv from 'dotenv'
 import log from '../log.js'
 
 const getConfig = () => {
-    if (fs.existsSync('.env')) {
-        log('.env file found, using for config. You should be using Doppler!')
+    if (fs.existsSync('.env') || !process.env.DOPPLER_PROJECT) {
+        log('Config supplied by .env file. You should be using Doppler!')
         dotenv.config()
     }
 
