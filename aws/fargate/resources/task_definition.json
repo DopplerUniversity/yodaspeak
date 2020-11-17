@@ -1,0 +1,31 @@
+[
+  {
+    "image": "dopplerhq/yodaspeak",
+    "cpu": ${cpu},
+    "memory": ${memory},
+    "name": "${app_name}",
+    "essential": true,
+    "networkMode": "awsvpc",
+    "environment": [
+        {"name": "DOPPLER_TOKEN", "value": "${doppler_token}"}
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+          "awslogs-group": "/fargate/service/${app_name}",
+          "awslogs-region": "${region}",
+          "awslogs-stream-prefix": "${app_name}"
+      }
+  },
+    "portMappings": [
+      {
+        "containerPort": ${port},
+        "hostPort": ${port}
+      },
+      {
+        "containerPort": ${tls_port},
+        "hostPort": ${tls_port}
+      }
+    ]
+  }
+]
