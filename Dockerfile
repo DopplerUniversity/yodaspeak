@@ -17,7 +17,7 @@ COPY . .
 
 USER node
 
-EXPOSE 3000
+EXPOSE 3000 3443
 
 HEALTHCHECK --interval=5s --timeout=5s --retries=3 CMD wget http://localhost:3000/healthz -q -O - > /dev/null 2>&1
 
