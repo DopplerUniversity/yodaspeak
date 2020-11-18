@@ -33,7 +33,7 @@ import getApp from './app.js'
                 app
             )
             .listen(config.TLS_PORT, config.HOSTNAME, () => {
-                log(`HTTPS server at https://${HOST}:${config.TLS_PORT}/ (Press CTRL+C to quit)`)
+                log(`HTTPS server at https://${config.HOSTNAME}:${config.TLS_PORT}/ (Press CTRL+C to quit)`)
             })
     }
 
