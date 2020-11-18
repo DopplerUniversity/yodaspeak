@@ -73,7 +73,7 @@ Now let's use `doppler run` to call the `npm start` command, which will inject o
 doppler run -- npm start
 ```
 
-You can now access the site at [http://localhost:3000](http://localhost:3000)
+You can now access the site at [http://localhost:8080](http://localhost:8080)
 
 ## Using Docker
 
@@ -86,7 +86,7 @@ Using Docker requires a [Doppler service token](https://docs.doppler.com/docs/en
 To run the Yoda Speak Docker container:
 
 ```sh
- docker container run -it --rm --init -e DOPPLER_TOKEN="dp.st.xxx" -p 3000:3000 dopplerhq/yodaspeak:latest
+ docker container run -it --rm --init -e DOPPLER_TOKEN="dp.st.xxx" -p 8080:8080 dopplerhq/yodaspeak:latest
 ```
 
 > NOTE: Check out the Docker specific commands in the `Makefile` for both Docker and Docker Compose.

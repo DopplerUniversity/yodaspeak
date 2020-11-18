@@ -50,11 +50,10 @@ docker-run:
 		-it \
 		--rm \
 		--init \
-		-d \
 		--name $(CONTAINER_NAME) \
 		-e DOPPLER_TOKEN=${YODASPEAK_SERVICE_TOKEN} \
-		-p 3000:3000 \
-		-p 3443:3443 \
+		-p 8080:8080 \
+		-p 8443:8443 \
 		$(IMAGE_NAME):latest
 
 docker-compose-up:
@@ -78,8 +77,8 @@ docker-run-dev:
 		-e "DOPPLER_CONFIG=$(shell doppler configure get config --plain)" \
 		-v $(shell pwd):/usr/src/app:cached \
 		-u root \
-		-p 3443:3443 \
-		-p 3000:3000 \
+		-p 8443:8443 \
+		-p 8080:8080 \
 		$(IMAGE_NAME):latest \
 		./bin/docker-dev-command.sh
 

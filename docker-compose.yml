@@ -7,5 +7,5 @@ services:
         environment:
             DOPPLER_TOKEN: $YODASPEAK_SERVICE_TOKEN
         ports:
-            - 3000:3000
-            - 3443:3443
+            - 8080:8080
+            - 8443:8443
