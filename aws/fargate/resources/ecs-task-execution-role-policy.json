@@ -2,7 +2,13 @@
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "AllowSSMAccess",
+            "Sid": "Logs",
+            "Effect": "Allow",
+            "Action": ["logs:CreateLogStream", "logs:PutLogEvents"],
+            "Resource": "*"
+        },
+        {
+            "Sid": "SSMAccess",
             "Effect": "Allow",
             "Action": [
                 "ssm:GetParameterHistory",
@@ -14,9 +20,15 @@
             "Resource": "*"
         },
         {
-            "Sid": "AllowSecretsManagerAccess",
+            "Sid": "SecretsManagerAccess",
             "Effect": "Allow",
             "Action": ["secretsmanager:GetSecretValue"],
+            "Resource": "*"
+        },
+        {
+            "Sid": "KMS",
+            "Effect": "Allow",
+            "Action": ["kms:Decrypt"],
             "Resource": "*"
         }
     ]
