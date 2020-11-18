@@ -2,6 +2,12 @@
     "Version": "2012-10-17",
     "Statement": [
         {
+            "Sid": "AllowLogs",
+            "Effect": "Allow",
+            "Action": ["logs:CreateLogStream", "logs:PutLogEvents"],
+            "Resource": "*"
+        },
+        {
             "Sid": "AllowSSMAccess",
             "Effect": "Allow",
             "Action": [
@@ -16,9 +22,7 @@
         {
             "Sid": "AllowSecretsManagerAccess",
             "Effect": "Allow",
-            "Action": [
-                "secretsmanager:GetSecretValue",
-            ],
+            "Action": ["secretsmanager:GetSecretValue"],
             "Resource": "*"
         }
     ]

@@ -22,27 +22,21 @@ provider "aws" {
 # IAM
 # ------------------------------------------
 
-# https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html
-resource "aws_iam_role" "ecsTaskExecutionRole" {
-  name               = "${var.app_name}-ecs"
-  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
+resource "aws_iam_role" "this" {
+  name               = "${var.app_name}-ecs-role"
+  assume_role_policy = file("${path.module}/resources/iam-policy-ecs-assume-role.json")
 }
 
-data "aws_iam_policy_document" "assume_role_policy" {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["ecs-tasks.amazonaws.com"]
-    }
-  }
+resource "aws_iam_policy" "this" {
+  name   = "${var.app_name}-ecs-role-policy"
+  policy = file("${path.module}/resources/ecs-task-execution-role-policy.json")
 }
 
-resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
-  role       = aws_iam_role.ecsTaskExecutionRole.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+resource "aws_iam_role_policy_attachment" "this" {
+  role       = aws_iam_role.this.name
+  policy_arn = aws_iam_policy.this.arn
 }
+
 
 
 # ------------------------------------------
@@ -63,7 +57,8 @@ resource "aws_ecs_task_definition" "this" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.cpu
   memory                   = var.memory
-  execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
+  # execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
+  execution_role_arn       = aws_iam_role.this.arn
 
   container_definitions = templatefile(
     "${path.module}/resources/task_definition.json",
