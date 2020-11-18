@@ -22,6 +22,8 @@ provider "aws" {
 # IAM
 # ------------------------------------------
 
+data "aws_caller_identity" "current" {}
+
 resource "aws_iam_role" "this" {
   name               = "${var.app_name}-ecs-role"
   assume_role_policy = file("${path.module}/resources/iam-policy-ecs-assume-role.json")
@@ -38,10 +40,13 @@ resource "aws_iam_role_policy_attachment" "this" {
 }
 
 
-
 # ------------------------------------------
 # ECS
 # ------------------------------------------
+
+resource "aws_cloudwatch_log_group" "this" {
+  name = "/fargate/service/${var.app_name}"
+}
 
 resource "aws_ecs_cluster" "this" {
   name = "yodaspeak-ecs-cluster"
@@ -52,28 +57,29 @@ resource "aws_ecs_cluster" "this" {
 }
 
 resource "aws_ecs_task_definition" "this" {
-  family                   = "app"
+  family                   = var.app_name
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.cpu
   memory                   = var.memory
-  # execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
   execution_role_arn       = aws_iam_role.this.arn
 
   container_definitions = templatefile(
-    "${path.module}/resources/task_definition.json",
+    "${path.module}/resources/task-definition-secrets-manager.json",
+    # "${path.module}/resources/task-definition-param-store.json",
+    # "${path.module}/resources/task-definition-env-var.json",
     {
+      account_id    = data.aws_caller_identity.current.account_id,
       region        = var.region,
       app_name      = var.app_name,
       cpu           = var.cpu,
       memory        = var.memory,
       port          = var.port,
       tls_port      = var.tls_port,
+      secret_name   = var.doppler_token_secret_name,
       doppler_token = var.doppler_token
     }
   )
-
-  depends_on = [aws_cloudwatch_log_group.this]
 }
 
 resource "aws_ecs_service" "main" {
@@ -93,7 +99,7 @@ resource "aws_ecs_service" "main" {
 
 
 # ------------------------------------------
-# OTHER
+# NETWORK
 # ------------------------------------------
 
 resource "aws_security_group" "this" {
@@ -126,8 +132,4 @@ resource "aws_security_group" "this" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-}
-
-resource "aws_cloudwatch_log_group" "this" {
-  name = "/fargate/service/${var.app_name}"
 }

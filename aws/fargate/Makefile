@@ -6,6 +6,7 @@ AWS_TERRAFORM_FLAGS = \
 	-var "memory=${FARGATE_MEMORY}" \
 	-var "port=${PORT}" \
 	-var "tls_port=${TLS_PORT}" \
+	-var "doppler_token_secret_name=${DOPPLER_TOKEN_SECRET_NAME}" \
 	-var "doppler_token=${DOPPLER_AWS_APP_SERVICE_TOKEN}"
 
 .PHONY: terraform-init
@@ -27,3 +28,7 @@ terraform-apply:
 .PHONY: aws-destroy
 terraform-destroy:
 	terraform destroy $(AWS_TERRAFORM_FLAGS) -force
+
+.PHONY: aws-destroy
+task-status:
+	ecs-cli ps  --region "$REGION" --cluster yodaspeak-ecs-cluster --desired-status RUNNING

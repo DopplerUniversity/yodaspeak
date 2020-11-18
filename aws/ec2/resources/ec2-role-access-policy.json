@@ -16,9 +16,7 @@
         {
             "Sid": "AllowSecretsManagerAccess",
             "Effect": "Allow",
-            "Action": [
-                "secretsmanager:GetSecretValue",
-            ],
+            "Action": ["secretsmanager:GetSecretValue"],
             "Resource": "*"
         }
     ]
