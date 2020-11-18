@@ -19,7 +19,7 @@ USER node
 
 EXPOSE 8080 8443
 
-HEALTHCHECK --interval=5s --timeout=5s --retries=3 CMD wget http://localhost:8080/healthz -q -O - > /dev/null 2>&1
+HEALTHCHECK --interval=5s --timeout=5s --retries=3 CMD wget http://localhost:8080/healthz -q -O - || exit 1
 
 ENTRYPOINT ["doppler", "run", "--"]
 CMD ["npm", "start"]
