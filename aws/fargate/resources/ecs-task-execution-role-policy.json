@@ -1,35 +1,35 @@
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "Logs",
-            "Effect": "Allow",
-            "Action": ["logs:CreateLogStream", "logs:PutLogEvents"],
-            "Resource": "*"
-        },
-        {
-            "Sid": "SSMAccess",
-            "Effect": "Allow",
-            "Action": [
-                "ssm:GetParameterHistory",
-                "ssm:GetParametersByPath",
-                "ssm:GetParameters",
-                "ssm:GetParameter",
-                "ssm:DescribeParameters"
-            ],
-            "Resource": "*"
-        },
-        {
-            "Sid": "SecretsManagerAccess",
-            "Effect": "Allow",
-            "Action": ["secretsmanager:GetSecretValue"],
-            "Resource": "*"
-        },
-        {
-            "Sid": "KMS",
-            "Effect": "Allow",
-            "Action": ["kms:Decrypt"],
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Logs",
+      "Effect": "Allow",
+      "Action": ["logs:CreateLogStream", "logs:PutLogEvents"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "SSMAccess",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:GetParameterHistory",
+        "ssm:GetParametersByPath",
+        "ssm:GetParameters",
+        "ssm:GetParameter",
+        "ssm:DescribeParameters"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "SecretsManagerAccess",
+      "Effect": "Allow",
+      "Action": ["secretsmanager:GetSecretValue"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "KMS",
+      "Effect": "Allow",
+      "Action": ["kms:Decrypt"],
+      "Resource": "*"
+    }
+  ]
 }

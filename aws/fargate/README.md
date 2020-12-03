@@ -5,7 +5,7 @@ This solution uses Doppler to supply the Terraform variables required to deploy 
 ## Prerequisites
 
 - Have a Doppler config with the required Terraform variables (see the `sample.env` file for a starting point).
-- The IAM user used for Terraform should have the policies `AmazonECS_FullAccess` and `IAMFullAccess` attached (you may also need a policy for creating the  CloudWatch log group).
+- The IAM user used for Terraform should have the policies `AmazonECS_FullAccess` and `IAMFullAccess` attached (you may also need a policy for creating the CloudWatch log group).
 - If the container will get the Doppler service token via AWS Param Store or Secrets Manager, create the relevant resource with a name of `/yodaspeak/production/doppler-token`.
 
 ## Design

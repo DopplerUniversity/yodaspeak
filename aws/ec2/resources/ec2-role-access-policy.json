@@ -1,23 +1,23 @@
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "AllowSSMAccess",
-            "Effect": "Allow",
-            "Action": [
-                "ssm:GetParameterHistory",
-                "ssm:GetParametersByPath",
-                "ssm:GetParameters",
-                "ssm:GetParameter",
-                "ssm:DescribeParameters"
-            ],
-            "Resource": "*"
-        },
-        {
-            "Sid": "AllowSecretsManagerAccess",
-            "Effect": "Allow",
-            "Action": ["secretsmanager:GetSecretValue"],
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowSSMAccess",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:GetParameterHistory",
+        "ssm:GetParametersByPath",
+        "ssm:GetParameters",
+        "ssm:GetParameter",
+        "ssm:DescribeParameters"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "AllowSecretsManagerAccess",
+      "Effect": "Allow",
+      "Action": ["secretsmanager:GetSecretValue"],
+      "Resource": "*"
+    }
+  ]
 }

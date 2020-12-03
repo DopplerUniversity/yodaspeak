@@ -1,11 +1,11 @@
 services:
-    web:
-        build: .
-        image: dopplerhq/yodaspeak
-        container_name: yodaspeak
-        init: true
-        environment:
-            DOPPLER_TOKEN: $YODASPEAK_SERVICE_TOKEN
-        ports:
-            - 8080:8080
-            - 8443:8443
+  web:
+    build: .
+    image: dopplerhq/yodaspeak
+    container_name: yodaspeak
+    init: true
+    environment:
+      DOPPLER_TOKEN: $YODASPEAK_SERVICE_TOKEN
+    ports:
+      - 8080:8080
+      - 8443:8443
