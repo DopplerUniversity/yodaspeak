@@ -3,9 +3,6 @@ services:
     user: root # Required to install dev dependencies
     stdin_open: true
     tty: true
-    environment:
-      DOPPLER_PROJECT: $DOPPLER_PROJECT
-      DOPPLER_CONFIG: $DOPPLER_CONFIG
+    command: ['./bin/docker-dev-cmd.sh']
     volumes:
       - .:/usr/src/app
-    command: ./bin/docker-dev-command.sh

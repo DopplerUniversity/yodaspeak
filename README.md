@@ -2,42 +2,32 @@
 
 [![](./src/public/img/screenshot.jpg)](https://yodaspeak.io/)
 
-A simple application to translate English into Yoda's version, which is mostly, back to front, or, in other words, [object–subject–verb](https://en.wikipedia.org/wiki/Object%E2%80%93subject%E2%80%93verb) word order.
+A simple application to translate English into Yoda Speak.
 
-It's designed to show how to use the [Doppler Universal Secrets Manager](https://doppler.com/) for securely and easily fetching secrets and application configuration via environment variables.
+It's designed to show how to use the [Doppler Universal Secrets Manager](https://doppler.com/) for securely and easily fetching app config and secrets for local and production environments using the Doppler CLI and either a system installation of Node.js, Docker, or Docker Compose (Kubernetes coming soon).
+
+New to Doppler? [Check out our documentation](https://docs.doppler.com/docs) to get started with your own applications, or clone this repo and follow-along.
+
+> NOTE: The Yoda translation API used by the app is limited to 5 requests per hour unless you [register to purchase an API key](https://funtranslations.com/register). You can view the production site at [https://yodaspeak.io/](https://yodaspeak.io/)
 
 ## Requirements
 
+The commands and scripts to run tha application will work on macOS and Linux variants but not Windows. If you wish to get this working on Windows, either use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) or create an issue if you'd like to see native Windows support via PowerShell.
+
+Requirements:
+
 - [Doppler CLI](https://docs.doppler.com/docs/enclave-installation)
 - Node 14+
+- Docker
+- Docker Compose
 
-If on macOS, you can install these by running:
+If on macOS, you can install the Doppler CLI by running:
 
 ```sh
 brew install dopplerhq/cli/doppler node
 ```
 
-## Setting up
-
-1. Install dependencies:
-
-```sh
-npm install
-```
-
-2. Use an `.env` file initially to supply secrets and configuration:
-
-```sh
-cp sample.env .env
-```
-
-3. Run the server:
-
-```sh
-npm start
-```
-
-## Running the app using Doppler
+## Doppler set up
 
 1. [Install Doppler](https://docs.doppler.com/docs/enclave-installation)
 1. From a terminal, run:
@@ -48,48 +38,55 @@ doppler login
 
 1. Once logged in, open a new browser window and [sign in to Doppler](https://dashboard.doppler.com/)
 1. In the Doppler Web UI, create a workspace
-1. Then [create a project](https://docs.doppler.com/docs/enclave-project-setup) called `yodaspeak`
-1. Add the required secrets and configuration by uploading the contents of `sample.env` file, then save.
-1. In a terminal, cd into the `yodaspeak` directory, then run:
+
+Once authenticated, run the following command to create the `yodaspeak` project in Doppler and populate the required secrets with default values:
 
 ```sh
-# Configure Doppler to fetch the `yodaspeak` secrets from the `dev` config
-doppler setup
+make doppler-project-setup
 ```
 
-To check that the Doppler CLI can access the project and retrieve its secrets, run:
+## Local development with system Node.js
 
-```sh
-doppler run -- printenv YODA
-```
+Run `npm start` to install all app dependencies.
 
-If secrets are displayed, Doppler is good to go! Now let's run the server.
-
-> NOTE: The Yoda translation API used by the app is limited to 5 requests per hour unless you [register to purchase an API key](https://funtranslations.com/register). You can view the production site at [https://yodaspeak.io/](https://yodaspeak.io/)
-
-Now let's use `doppler run` to call the `npm start` command, which will inject our secrets as environment variables that our app can use.
+Then use `doppler run` to call the `npm start` command, which will inject our secrets as environment variables:
 
 ```sh
 doppler run -- npm start
 ```
 
-You can now access the site at [http://localhost:8080](http://localhost:8080)
+> NOTE: For HTTPS, create the `TLS_CERT`, `TLS_KEY`, and `TLS_PORT` secrets
 
 ## Using Docker
 
-You can use Docker to run the app in the same way you would in production with a [Doppler service token](https://docs.doppler.com/docs/enclave-service-tokens), or you can configure it the same way you would a local development environment.
+You can use Docker in production using a [Doppler service token](https://docs.doppler.com/docs/enclave-service-tokens) to provide read-only access to a specific production config, or run the container locally local code mounted into the container and the development dependencies installed.
 
-> NOTE: If you change the value for `PORT` in Doppler, then you'll need to update the port binding in the `docker container run` command to match. For example, if `PORT` were changed to `8080`, then it would be `-p 8080:8080`.
-
-Using Docker requires a [Doppler service token](https://docs.doppler.com/docs/enclave-service-tokens) for a config populated with the secrets in the [sample.env file](sample.env), as all secrets will be fetched at runtime.
-
-To run the Yoda Speak Docker container:
+To use Docker in production, run:
 
 ```sh
- docker container run -it --rm --init -e DOPPLER_TOKEN="dp.st.xxx" -p 8080:8080 dopplerhq/yodaspeak:latest
+# Requires `DOPPLER_TOKEN` to be exported
+make docker
 ```
 
-> NOTE: Check out the Docker specific commands in the `Makefile` for both Docker and Docker Compose.
+For local development, run:
+
+```sh
+make docker-dev
+```
+
+There are also commands for using Docker Compose.
+
+To use Docker Compose in production, run:
+
+```sh
+make docker-compose-up
+```
+
+For local development, run:
+
+```sh
+make docker-compose-up-dev
+```
 
 ## Using Repl.it
 
@@ -97,11 +94,10 @@ To run the Yoda Speak Docker container:
 
 > NOTE: This is a work in progress and feedback is greatly appreciated!
 
-You can quickly and easily run [YodaSpeak on repl.it](ttps://repl.it/github/dopplerhq/yodaspeak) by following the below steps once your environment has booted up:
+You can quickly and easily run [YodaSpeak on repl.it](https://repl.it/github/dopplerhq/yodaspeak) by following the below steps once your environment has booted up:
 
-1. If you haven't already, create a `yodaspeak` project in [Doppler](https://dashboard.doppler.com/), using the contents of the `sample.env` file to populate the initial set of secrets
-2. Create a [Service Token](https://docs.doppler.com/docs/enclave-service-tokens) that will be used for fetching secrets in your repl.it environment
-3. Now install and configure all required dependencies by running:
+1. Create a [Service Token](https://docs.doppler.com/docs/enclave-service-tokens) and expose it using the `DOPPLER_TOKEN` environment variable
+1. Install and configure all required dependencies by running:
 
 ```sh
 # You'll need to paste your Doppler Service Token when prompted

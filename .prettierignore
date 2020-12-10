@@ -5,3 +5,4 @@ package-lock.json
 ./views
 Makefile
 dist
+aws/fargate/resources/*.json

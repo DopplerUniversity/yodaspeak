@@ -4,8 +4,23 @@ services:
     image: dopplerhq/yodaspeak
     container_name: yodaspeak
     init: true
+    # The `--env-file` flag for docker-compose only makes the variables available to the `environment` object,
+    # and doesn't pass them through to the container like `docker run` does.
+    # Hence, why we have to manually list all env vars.
     environment:
-      DOPPLER_TOKEN: $YODASPEAK_SERVICE_TOKEN
+      - LOGGING
+      - HOSTNAME
+      - PORT
+      - TRANSLATE_ENDPOINT
+      - TLS_CERT
+      - TLS_KEY
+      - TLS_PORT
+      - TRANSLATION_SUGGESTION
+      - YODA_TRANSLATE_API_ENDPOINT
+      - YODA_TRANSLATE_API_KEY
+      - RATE_LIMITING_ENABLED
+      - DOPPLER_PROJECT
+      - DOPPLER_CONFIG
     ports:
       - 8080:8080
       - 8443:8443

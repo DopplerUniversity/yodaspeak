@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: Use Docker
+
 # Required by Doppler
 export HOME=/root
 
