@@ -1,0 +1,23 @@
+name: Heroku CI Config Vars Sync
+on: [workflow_dispatch]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v1
+
+      - name: Clear current Heroku CI Pipeline Config Vars
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_CI }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku ci:config:unset --pipeline yodaspeak -- $(heroku ci:config --pipeline yodaspeak --json | jq -jr ' . | to_entries[] | "\(.key)"," "')
+
+      - name: Sync Doppler CI secrets to Heroku CI Pipeline Config Vars
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_CI }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: eval heroku ci:config:set --pipeline=yodaspeak -- $(doppler secrets download --no-file --format json | jq -jr ' . | to_entries[] | "\(.key)=\"\(.value)\""," "')

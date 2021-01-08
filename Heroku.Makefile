@@ -6,17 +6,18 @@
 
 HEROKU_TEAM=dagobah-systems
 HEROKU_APP=yodaspeak-production
+DOMAIN=yodaspeak.io
 
 heroku-create:
 	heroku apps:create --team $(HEROKU_TEAM) $(HEROKU_APP)
 
-	$(MAKE) heroku-set-vars API_KEY=$(API_KEY)
+	$(MAKE) heroku-set-vars -f Heroku.Makefile API_KEY=$(API_KEY) HEROKU_TEAM=$(HEROKU_APP)
 
-	heroku domains:add --app $(HEROKU_APP) yodaspeak.io
-	heroku domains:wait --app $(HEROKU_APP) yodaspeak.io
+	heroku domains:add --app $(HEROKU_APP) $(DOMAIN)
+	heroku domains:wait --app $(HEROKU_APP) $(DOMAIN)
 	git remote rename heroku $(HEROKU_APP)
 
-	$(MAKE) heroku-deploy
+	$(MAKE) heroku-deploy -f Heroku.Makefile HEROKU_APP=$(HEROKU_APP)
 
 heroku-set-vars:
 	heroku config:set --app $(HEROKU_APP) \

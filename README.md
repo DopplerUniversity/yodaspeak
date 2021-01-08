@@ -88,6 +88,31 @@ For local development, run:
 make docker-compose-up-dev
 ```
 
+## Deploying to Heroku
+
+This is mainly for the Doppler team to test the Heroku integration but you can deploy this to your own Heroku account/team, by overriding the default values for:
+
+- `HEROKU_TEAM`
+- `HEROKU_APP`
+- `DOMAIN`
+
+Creating and deploying a site also consists of setting initial default values for config vars in order for the app to deploy successfully.
+
+Then once the app has deployed, open the Doppler dashboard and enable the Heroku integration for the relevant environment.
+
+To create and deploy to production using default values (works for Doppler team only)
+
+```sh
+make heroku-create -f Heroku.Makefile
+```
+
+To create and deploy to your own custom account:
+
+```sh
+make heroku-create -f Heroku.Makefile HEROKU_TEAM=your-heroku-team HEROKU_APP=your-yodaspeak-app-name DOMAIN=your-domain.yodaspeak.com
+```
+
+
 ## Using Repl.it
 
 [![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://repl.it/github/dopplerhq/yodaspeak)
