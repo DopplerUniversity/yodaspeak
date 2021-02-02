@@ -4,23 +4,23 @@
 
 # Used by Doppler for integration testing
 
-HEROKU_TEAM=dagobah-systems
-HEROKU_APP=yodaspeak-production
+TEAM=dopplerhq
+APP=yodaspeak-production
 DOMAIN=yodaspeak.io
 
-heroku-create:
-	heroku apps:create --team $(HEROKU_TEAM) $(HEROKU_APP)
+create:
+	heroku apps:create --team $(TEAM) $(APP)
 
-	$(MAKE) heroku-set-vars -f Heroku.Makefile API_KEY=$(API_KEY) HEROKU_TEAM=$(HEROKU_APP)
+	$(MAKE) set-vars -f Heroku.Makefile API_KEY=$(API_KEY) TEAM=$(APP)
 
-	heroku domains:add --app $(HEROKU_APP) $(DOMAIN)
-	heroku domains:wait --app $(HEROKU_APP) $(DOMAIN)
-	git remote rename heroku $(HEROKU_APP)
+	heroku domains:add --app $(APP) $(DOMAIN)
+	heroku domains:wait --app $(APP) $(DOMAIN)
+	git remote rename heroku $(APP)
 
-	$(MAKE) heroku-deploy -f Heroku.Makefile HEROKU_APP=$(HEROKU_APP)
+	$(MAKE) deploy -f Heroku.Makefile APP=$(APP)
 
-heroku-set-vars:
-	heroku config:set --app $(HEROKU_APP) \
+set-vars:
+	heroku config:set --app $(APP) \
 	DEBUG="yodaspeak:*" \
 	HOSTNAME="0.0.0.0" \
 	LOGGING="common" \
@@ -31,16 +31,19 @@ heroku-set-vars:
 	RATE_LIMITING_ENABLED="true" \
 	NPM_CONFIG_PRODUCTION="true"
 
-heroku-get-vars:
-	heroku config --json -a $(HEROKU_APP)
+get-vars:
+	heroku config --json -a $(APP)
 
-heroku-deploy:
-	git push $(HEROKU_APP) master -f
-	heroku open --app $(HEROKU_APP)
+deploy:
+	git push $(APP) master -f
+	heroku open --app $(APP)
 
-heroku-clear-doppler-vars:
-	heroku config:unset --app $(HEROKU_APP) DOPPLER_ENCLAVE_CONFIG DOPPLER_CONFIG DOPPLER_ENCLAVE_ENVIRONMENT DOPPLER_ENVIRONMENT DOPPLER_ENCLAVE_PROJECT DOPPLER_PROJECT
+logs:
+	heroku logs --app $(APP) --tail
 
-heroku-destroy:
-	heroku domains:clear --app $(HEROKU_APP)
-	heroku apps:destroy --app $(HEROKU_APP) --confirm $(HEROKU_APP)
+clear-doppler-vars:
+	heroku config:unset --app $(APP) DOPPLER_ENCLAVE_CONFIG DOPPLER_CONFIG DOPPLER_ENCLAVE_ENVIRONMENT DOPPLER_ENVIRONMENT DOPPLER_ENCLAVE_PROJECT DOPPLER_PROJECT
+
+destroy:
+	heroku domains:clear --app $(APP)
+	heroku apps:destroy --app $(APP) --confirm $(APP)

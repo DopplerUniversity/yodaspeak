@@ -90,10 +90,10 @@ make docker-compose-up-dev
 
 ## Deploying to Heroku
 
-This is mainly for the Doppler team to test the Heroku integration but you can deploy this to your own Heroku account/team, by overriding the default values for:
+This is mainly for the Doppler team to test the Heroku integration but you can deploy this to your own Heroku account/team, by overriding the default values in `Heroku.Makefile` for:
 
-- `HEROKU_TEAM`
-- `HEROKU_APP`
+- `TEAM`
+- `APP`
 - `DOMAIN`
 
 Creating and deploying a site also consists of setting initial default values for config vars in order for the app to deploy successfully.
@@ -103,13 +103,13 @@ Then once the app has deployed, open the Doppler dashboard and enable the Heroku
 To create and deploy to production using default values (works for Doppler team only)
 
 ```sh
-make heroku-create -f Heroku.Makefile
+make create -f Heroku.Makefile
 ```
 
 To create and deploy to your own custom account:
 
 ```sh
-make heroku-create -f Heroku.Makefile HEROKU_TEAM=your-heroku-team HEROKU_APP=your-yodaspeak-app-name DOMAIN=your-domain.yodaspeak.com
+make create -f Heroku.Makefile TEAM=your-team APP=your-yodaspeak-app-name DOMAIN=your-domain.yodaspeak.com
 ```
 
 
