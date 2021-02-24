@@ -27,6 +27,10 @@ If on macOS, you can install the Doppler CLI by running:
 brew install dopplerhq/cli/doppler node
 ```
 
+## Environment variables
+
+The following environment variables are required and you can use the below defaults. Also see [`sample.env`[](sample.env)
+
 ## Doppler set up
 
 1. [Install Doppler](https://docs.doppler.com/docs/enclave-installation)
