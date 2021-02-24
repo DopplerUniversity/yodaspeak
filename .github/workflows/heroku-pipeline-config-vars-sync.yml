@@ -1,4 +1,4 @@
-name: Heroku Pipeline Config Vars Sync
+name: Heroku Pipeline (Review Apps) Config Vars Sync
 on: [workflow_dispatch]
 
 jobs:
@@ -14,10 +14,16 @@ jobs:
         run: heroku plugins:install api
 
       - name: Get Pipeline ID
-        run: echo "HEROKU_PIPELINE_ID="$(heroku api GET pipelines | jq '.[] | select(.name=="yodaspeak")' | jq -r '.id')" >> $GITHUB_ENV;
+        run: |
+          echo "PIPELINE_ID=$(heroku api GET pipelines | jq '.[] | select(.name=="yodaspeak")' | jq -r '.id')" >> $GITHUB_ENV;
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_CI }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
       - name: Clear current Pipeline Config Vars
-        run: eval heroku api PATCH /pipelines/$PIPELINE_ID/stage/review/config-vars --body "'{$(heroku api GET /pipelines/$PIPELINE_ID/stage/review/config-vars | jq -jr ' . | to_entries[] | "\"\(.key)\":null",","' | sed 's/.$//')}'"
+        run: |
+          printenv;
+          eval heroku api PATCH /pipelines/$PIPELINE_ID/stage/review/config-vars --body "'{$(heroku api GET /pipelines/$PIPELINE_ID/stage/review/config-vars | jq -jr ' . | to_entries[] | "\"\(.key)\":null",","' | sed 's/.$//')}'";
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_CI }}
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
