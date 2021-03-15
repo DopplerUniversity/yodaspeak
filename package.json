@@ -11,6 +11,7 @@
   "scripts": {
     "start": "node ./src/server",
     "local": "nodemon ./src/server",
+    "debug": "node --inspect ./src/server",
     "lint": "eslint --fix --quiet",
     "format": "prettier --write --loglevel error .",
     "build-static": "node ./src/build.js",

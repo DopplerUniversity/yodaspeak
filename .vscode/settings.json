@@ -5,4 +5,5 @@
   "typescript.validate.enable": false,
   "javascript.validate.enable": false,
   "files.trimTrailingWhitespace": true,
+  "debug.javascript.autoAttachFilter": "onlyWithFlag"
 }
