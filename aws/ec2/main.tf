@@ -20,6 +20,8 @@ provider "aws" {
 }
 
 provider "cloudflare" {
+  email   = var.cloudflare_email
+  api_token = var.cloudflare_api_token
 }
 
 # Get the latest Amazon Linux 2 AMI
@@ -144,7 +146,7 @@ resource "aws_instance" "this" {
 
 resource "cloudflare_record" "this" {
   zone_id = var.cloudflare_zone_id
-  name    = "aws"
+  name    = "yodaspeak-aws"
   value   = aws_instance.this.public_ip
   type    = "A"
   proxied = true

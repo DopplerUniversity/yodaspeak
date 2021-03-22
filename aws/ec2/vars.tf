@@ -33,6 +33,14 @@ variable "doppler_service_token" {
   description = "Doppler service token - https://docs.doppler.com/docs/enclave-service-tokens"
 }
 
+variable "cloudflare_email" {
+  description = "Cloudflare "
+}
+
+variable "cloudflare_api_token" {
+  description = "Cloudflare API token"
+}
+
 variable "cloudflare_zone_id" {
   description = "Cloudflare zone id"
 }

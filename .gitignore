@@ -72,3 +72,4 @@ typings/
 
 # .tfvars files
 *.tfvars
+.terraform
