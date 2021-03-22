@@ -12,8 +12,6 @@ region=""
 key_name = ""
 
 # Cloudflare
-cloudflare_email = ""
-cloudflare_api_key = ""
 cloudflare_zone_id = ""
 
 # Doppler
