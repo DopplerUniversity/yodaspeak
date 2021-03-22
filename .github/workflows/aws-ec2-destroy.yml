@@ -13,7 +13,7 @@ jobs:
       - name: Destroy
         working-directory: ./aws/ec2
         env:
-          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_AWS_TERRAFORM }}
         run: |
           doppler run --command 'terraform init --upgrade -input=false && \
             echo vpc_id = \"${VPC_ID}\" >> terraform.tfvars && \
