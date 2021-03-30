@@ -1,6 +1,8 @@
 SHELL=/bin/bash
 PATH:=$(PATH):./node_modules/.bin/
 PROJECT=yodaspeak
+PORT:=$(shell doppler secrets get PORT --plain)
+TLS_PORT:=$(shell doppler secrets get TLS_PORT --plain)
 
 ################
 #  DEV SERVER  #
@@ -30,23 +32,53 @@ docker-build:
 docker-buildx:
 	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build -t $(IMAGE_NAME):latest .
 
+# Doppler CLI injects environment variables though the `--env-file` option
 docker:
-	./bin/docker.sh
+	docker container run \
+		--init \
+		-d \
+		--restart unless-stopped \
+		--name yodaspeak \
+		--env-file <(doppler secrets download --no-file --format docker) \
+		-p $(PORT):$(PORT) \
+		-p $(TLS_PORT):$(TLS_PORT) \
+		dopplerhq/yodaspeak:latest
+
+# Uses the embedded Doppler CLI by overriding the default CMD (npm start) to be replaced by doppler run -- npm start
+# Usage: DOPPLER_TOKEN=dp.st.dev_ryan.XXXX make docker-doppler-cli
+docker-doppler-cli:
+	docker container run \
+		--init \
+		-d \
+		--restart unless-stopped \
+		--name yodaspeak \
+		-e DOPPLER_TOKEN=${DOPPLER_TOKEN} \
+		-p $(PORT):$(PORT) \
+		-p $(TLS_PORT):$(TLS_PORT) \
+		dopplerhq/yodaspeak:latest doppler run -- npm start
 
 docker-dev:
-	./bin/docker-dev.sh
-
-docker-doppler:
-	./bin/docker-doppler.sh
+	# Runs as root user in order to install dev packages
+	docker container run \
+		--init \
+		--rm \
+		-it \
+		--name yodaspeak \
+		-v $(pwd):/usr/src/app:cached \
+		-u root \
+		--env-file <(doppler secrets download --no-file --format docker) \
+		-p $(PORT):$(PORT) \
+		-p $(TLS_PORT):$(TLS_PORT) \
+		dopplerhq/yodaspeak:latest ./bin/docker-dev-cmd.sh
 
 docker-stop:
 	docker container rm -f yodaspeak
 
 docker-compose-up:
-	./bin/docker-compose-up.sh
+	doppler run -- docker-compose -f docker-compose.yml up;docker-compose rm -fsv;
 
 docker-compose-up-dev:
-	./bin/docker-compose-up-dev.sh
+	doppler run -- docker-compose -f docker-compose.yml -f docker-compose.dev.yml up;docker-compose rm -fsv;
 
 docker-shell:
 	docker container exec -it $(CONTAINER_NAME) sh
