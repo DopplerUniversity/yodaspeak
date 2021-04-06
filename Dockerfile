@@ -3,12 +3,12 @@ FROM node:lts-alpine
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 LABEL maintainer="Ryan Blunden <ryan.blunden@doppler.com>"
 
-# Ensure DNS resolution works everywhere
+# Installing bind-tools ensures DNS resolution works everywhere
 # See https://github.com/gliderlabs/docker-alpine/issues/539#issuecomment-607159184
-RUN apk add --no-cache bind-tools
+RUN apk add --no-cache bind-tools gnupg
 
 # Use to cache bust system dependencies
-ENV LAST_UPDATED 2020-12-16
+ENV LAST_UPDATED 2021-04-06
 
 RUN (curl -Ls https://cli.doppler.com/install.sh || wget -qO- https://cli.doppler.com/install.sh) | sh
 

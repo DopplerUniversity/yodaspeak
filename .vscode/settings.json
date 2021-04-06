@@ -1,9 +1,7 @@
 {
-  "deno.enable": false,
   "editor.tabSize": 2,
-  "nunjucksFormat.style": true,
   "typescript.validate.enable": false,
   "javascript.validate.enable": false,
   "files.trimTrailingWhitespace": true,
-  "debug.javascript.autoAttachFilter": "onlyWithFlag"
+  "debug.javascript.autoAttachFilter": "onlyWithFlag",
 }

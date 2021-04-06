@@ -1,12 +1,11 @@
 SHELL=/bin/bash
 PATH:=$(PATH):./node_modules/.bin/
 PROJECT=yodaspeak
-PORT:=$(shell doppler secrets get PORT --plain)
-TLS_PORT:=$(shell doppler secrets get TLS_PORT --plain)
 
-################
-#  DEV SERVER  #
-################
+
+#################
+#  DEVELOPMENT  #
+#################
 
 server:
 	doppler run -- npm start
@@ -18,6 +17,8 @@ static-server:
 	doppler run -- npm run build
 	python3 -m http.server --directory ./dist
 
+devcontainer-env:
+	doppler secrets download --no-file --format docker > .devcontainer/.env
 
 ############
 #  Docker  #
@@ -25,7 +26,8 @@ static-server:
 
 CONTAINER_NAME=yodaspeak
 IMAGE_NAME=dopplerhq/yodaspeak
-
+PORT:=$(shell doppler secrets get PORT --plain)
+TLS_PORT:=$(shell doppler secrets get TLS_PORT --plain)
 docker-build:
 	docker image build -t $(IMAGE_NAME):latest .
 
@@ -57,18 +59,17 @@ docker-doppler-cli:
 		-p $(TLS_PORT):$(TLS_PORT) \
 		dopplerhq/yodaspeak:latest doppler run -- npm start
 
+# Runs as root user in order to install dev packages
 docker-dev:
-	# Runs as root user in order to install dev packages
 	docker container run \
 		--init \
 		--rm \
 		-it \
 		--name yodaspeak \
-		-v $(pwd):/usr/src/app:cached \
+		-v $(shell pwd):/usr/src/app:cached \
 		-u root \
 		--env-file <(doppler secrets download --no-file --format docker) \
 		-p $(PORT):$(PORT) \
-		-p $(TLS_PORT):$(TLS_PORT) \
 		dopplerhq/yodaspeak:latest ./bin/docker-dev-cmd.sh
 
 docker-stop:

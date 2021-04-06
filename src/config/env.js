@@ -15,7 +15,7 @@ const getConfig = () => {
         TRANSLATE_ENDPOINT: process.env.TRANSLATE_ENDPOINT || '/translate', // Set to remote URL for static site deploys
         TLS_CERT: process.env.TLS_CERT || '',
         TLS_KEY: process.env.TLS_KEY || '',
-        TLS_PORT: process.env.TLS_PORT || 8443,
+        TLS_PORT: process.env.TLS_PORT || '',
         TRANSLATION_SUGGESTION: process.env.TRANSLATION_SUGGESTION,
         YODA_TRANSLATE_API_ENDPOINT: process.env.YODA_TRANSLATE_API_ENDPOINT,
         YODA_TRANSLATE_API_KEY: process.env.YODA_TRANSLATE_API_KEY,

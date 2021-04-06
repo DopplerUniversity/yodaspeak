@@ -1,0 +1,22 @@
+// See https://aka.ms/devcontainer.json for spec
+{
+  "name": "Yoda Speak",
+  "build": {
+    "dockerfile": "../Dockerfile"
+  },
+  "extensions": [
+    "ms-vscode.node-debug2"
+  ],
+  "postCreateCommand": "apk add git && npm install --only=dev --no-audit",
+  "forwardPorts": [
+    8080
+  ],
+  "runArgs": [
+    "--env-file",
+    ".devcontainer/.env"
+  ],
+  "containerEnv": {
+    "NODE_ENV": "development",
+  },
+  "remoteUser": "root" // Required to install dev packages and add git
+}
