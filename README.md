@@ -83,13 +83,13 @@ There are also commands for using Docker Compose.
 To use Docker Compose in production, run:
 
 ```sh
-make docker-compose-up
+make docker-compose
 ```
 
 For local development, run:
 
 ```sh
-make docker-compose-up-dev
+make docker-compose-dev
 ```
 
 ## Deploying to Heroku

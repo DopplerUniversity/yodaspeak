@@ -1,0 +1,8 @@
+services:
+  web:
+    user: root # Required to install dev dependencies
+    stdin_open: true
+    tty: true
+    command: ['doppler', 'run', '--', 'npm', 'start']
+    volumes:
+      - .:/usr/src/app

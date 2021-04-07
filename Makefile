@@ -30,8 +30,7 @@ devcontainer-service-token:
 
 CONTAINER_NAME=yodaspeak
 IMAGE_NAME=dopplerhq/yodaspeak
-PORT:=$(shell doppler secrets get PORT --plain)
-TLS_PORT:=$(shell doppler secrets get TLS_PORT --plain)
+
 docker-build:
 	docker image build -t $(IMAGE_NAME):latest .
 
@@ -46,8 +45,8 @@ docker:
 		--restart unless-stopped \
 		--name yodaspeak \
 		--env-file <(doppler secrets download --no-file --format docker) \
-		-p $(PORT):$(PORT) \
-		-p $(TLS_PORT):$(TLS_PORT) \
+		-p 8080:8080 \
+		-p 8443:8443 \
 		dopplerhq/yodaspeak:latest
 
 # Uses the embedded Doppler CLI by overriding the default CMD (npm start) to be replaced by doppler run -- npm start
@@ -59,8 +58,8 @@ docker-doppler-cli:
 		--restart unless-stopped \
 		--name yodaspeak \
 		-e DOPPLER_TOKEN=${DOPPLER_TOKEN} \
-		-p $(PORT):$(PORT) \
-		-p $(TLS_PORT):$(TLS_PORT) \
+		-p 8080:8080 \
+		-p 8443:8443 \
 		dopplerhq/yodaspeak:latest doppler run -- npm start
 
 # Runs as root user in order to install dev packages
@@ -73,17 +72,23 @@ docker-dev:
 		-v $(shell pwd):/usr/src/app:cached \
 		-u root \
 		--env-file <(doppler secrets download --no-file --format docker) \
-		-p $(PORT):$(PORT) \
+		-p 8080:8080 \
 		dopplerhq/yodaspeak:latest ./bin/docker-dev-cmd.sh
 
 docker-stop:
 	docker container rm -f yodaspeak
 
-docker-compose-up:
+docker-compose:
 	doppler run -- docker-compose -f docker-compose.yml up;docker-compose rm -fsv;
 
-docker-compose-up-dev:
+docker-compose-dev:
 	doppler run -- docker-compose -f docker-compose.yml -f docker-compose.dev.yml up;docker-compose rm -fsv;
+
+docker-compose-cli:
+	DOPPLER_TOKEN=$(shell doppler configure get token --plain) DOPPLER_PROJECT=$(shell doppler configure get project --plain) DOPPLER_CONFIG=$(shell doppler configure get config --plain) docker-compose -f docker-compose.yml -f docker-compose.dev-cli.yml up;docker-compose rm -fsv;
+
+docker-compose-dev-cli:
+	doppler run -- docker-compose -f docker-compose.yml -f docker-compose.dev-cli.yml up;docker-compose rm -fsv;
 
 docker-shell:
 	docker container exec -it $(CONTAINER_NAME) sh
