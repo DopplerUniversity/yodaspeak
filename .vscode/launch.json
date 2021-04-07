@@ -1,11 +1,9 @@
+// See https://go.microsoft.com/fwlink/?linkid=830387 for spec
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "node: server",
+      "name": "node: doppler server",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "doppler",
@@ -16,7 +14,7 @@
       ],
       "restart": true,
       "env": {
-        "PATH": "./node_modules/.bin:${env:PATH}", // Required so `nodemon` is in path
+        "PATH": "${env:PATH}:${workspaceFolder}/node_modules/.bin",
         "NODE_ENV": "development"
       },
       "skipFiles": [
@@ -24,10 +22,15 @@
       ],
     },
     {
-      "name": "node: dev container",
+      "name": "node: server",
       "type": "node",
       "request": "launch",
-      "runtimeExecutable": "/workspaces/yodaspeak/node_modules/.bin/nodemon",
+      "runtimeExecutable": "nodemon",
+      "restart": true,
+      "env": {
+        "PATH": "${env:PATH}:${workspaceFolder}/node_modules/.bin",
+        "NODE_ENV": "development"
+      },
       "skipFiles": [
         "<node_internals>/**"
       ]

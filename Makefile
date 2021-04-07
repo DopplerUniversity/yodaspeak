@@ -17,8 +17,12 @@ static-server:
 	doppler run -- npm run build
 	python3 -m http.server --directory ./dist
 
-devcontainer-env:
+devcontainer-env-file:
 	doppler secrets download --no-file --format docker > .devcontainer/.env
+
+devcontainer-service-token:
+	./bin/devcontainer-service-token.sh
+
 
 ############
 #  Docker  #

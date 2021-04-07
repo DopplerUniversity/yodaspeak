@@ -7,11 +7,21 @@
   "extensions": [
     "ms-vscode.node-debug2"
   ],
-  "postCreateCommand": "apk add git && npm install --only=dev --no-audit",
+  "postCreateCommand": "npm install --only=dev --no-audit",
   "forwardPorts": [
     8080
   ],
   "runArgs": [
+    // Two options for supplying environment variables:
+    //
+    // 1. Use the embedded Doppler CLI (preferred):
+    // - Run `make devcontainer-service-token` to save a new dev Service Token to .devcontainer/.env
+    // - Start the server using the `node: server`
+    //
+    // 2. Supply env vars to dev container
+    // - Run `make devcontainer-env-file` to save the secrets to a .devcontainer/.env file
+    // - Start the server using the `node: dev container .env`
+    //
     "--env-file",
     ".devcontainer/.env"
   ],
