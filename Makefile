@@ -17,11 +17,13 @@ static-server:
 	doppler run -- npm run build
 	python3 -m http.server --directory ./dist
 
+devcontainer-doppler-token:
+	@echo "DOPPLER_TOKEN=$(shell doppler configure get token --plain)" > .devcontainer/.env
+	@echo "DOPPLER_PROJECT=$(shell doppler configure get project --plain)" >> .devcontainer/.env
+	@echo "DOPPLER_CONFIG=$(shell doppler configure get config --plain)" >> .devcontainer/.env
+
 devcontainer-env-file:
 	doppler secrets download --no-file --format docker > .devcontainer/.env
-
-devcontainer-service-token:
-	./bin/devcontainer-service-token.sh
 
 
 ############
@@ -40,7 +42,6 @@ docker-buildx:
 # Doppler CLI injects environment variables though the `--env-file` option
 docker:
 	docker container run \
-		--init \
 		-d \
 		--restart unless-stopped \
 		--name yodaspeak \
@@ -53,19 +54,17 @@ docker:
 # Usage: DOPPLER_TOKEN=dp.st.dev_ryan.XXXX make docker-doppler-cli
 docker-doppler-cli:
 	docker container run \
-		--init \
 		-d \
 		--restart unless-stopped \
 		--name yodaspeak \
 		-e DOPPLER_TOKEN=${DOPPLER_TOKEN} \
 		-p 8080:8080 \
 		-p 8443:8443 \
-		dopplerhq/yodaspeak:latest doppler run -- npm start
+		dopplerhq/yodaspeak:latest
 
 # Runs as root user in order to install dev packages
 docker-dev:
 	docker container run \
-		--init \
 		--rm \
 		-it \
 		--name yodaspeak \
@@ -73,7 +72,7 @@ docker-dev:
 		-u root \
 		--env-file <(doppler secrets download --no-file --format docker) \
 		-p 8080:8080 \
-		dopplerhq/yodaspeak:latest ./bin/docker-dev-cmd.sh
+		dopplerhq/yodaspeak:latest
 
 docker-stop:
 	docker container rm -f yodaspeak
@@ -92,6 +91,16 @@ docker-compose-dev-cli:
 
 docker-shell:
 	docker container exec -it $(CONTAINER_NAME) sh
+
+
+##############
+# KUBERNETES #
+##############
+#kubectl create secret generic doppler-token --from-literal=DOPPLER_TOKEN=${DOPPLER_TOKEN}
+k8s-deploy:
+	kubectl apply -f kubernetes/deployment.yml
+
+# k8s-remove:
 
 
 ###############

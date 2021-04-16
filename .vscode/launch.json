@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "node: doppler server",
+      "name": "node: doppler cli server",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "doppler",

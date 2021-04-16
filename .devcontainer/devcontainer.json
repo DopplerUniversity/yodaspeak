@@ -15,7 +15,7 @@
     // Two options for supplying environment variables:
     //
     // 1. Use the embedded Doppler CLI (preferred):
-    // - Run `make devcontainer-service-token` to save a new dev Service Token to .devcontainer/.env
+    // - Run `make devcontainer-doppler-token` to save the CLI token, project and config to .devcontainer/.env
     // - Start the server using the `node: server`
     //
     // 2. Supply env vars to dev container
