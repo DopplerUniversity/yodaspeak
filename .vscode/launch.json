@@ -10,7 +10,8 @@
       "runtimeArgs": [
         "run",
         "--",
-        "nodemon"
+        "node",
+        "src/server.js"
       ],
       "restart": true,
       "env": {
@@ -25,7 +26,10 @@
       "name": "node: server",
       "type": "node",
       "request": "launch",
-      "runtimeExecutable": "nodemon",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "src/server.js"
+      ],
       "restart": true,
       "env": {
         "PATH": "${env:PATH}:${workspaceFolder}/node_modules/.bin",
