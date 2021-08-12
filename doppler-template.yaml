@@ -1,0 +1,35 @@
+projects:
+  - name: 'yodaspeak'
+    description: 'A simple application to translate English into Yoda Speak.'
+    environments:
+      - slug: 'dev'
+        name: 'Development'
+        configs:
+          - slug: 'dev'
+      - slug: 'prd'
+        name: 'Production'
+        configs:
+          - slug: 'prd'
+    secrets:
+      dev:
+        NODE_ENV: 'development'
+        DEBUG: 'yodaspeak:*'
+        LOGGING: 'dev'
+        HOST: 'localhost'
+        PORT: '8080'
+        TRANSLATION_SUGGESTION: 'Secrets must not be stored in git repositories'
+        YODA_TRANSLATE_API_ENDPOINT: 'https://api.funtranslations.com/translate/yoda.json'
+        TRANSLATE_ENDPOINT: '/translate'
+        YODA_TRANSLATE_API_KEY: ''
+        RATE_LIMITING_ENABLED: 'false'
+      prd:
+        NODE_ENV: 'production'
+        DEBUG: 'app: server: error:'
+        LOGGING: 'yodaspeak:*'
+        HOST: '0.0.0.0'
+        PORT: '8080'
+        TRANSLATION_SUGGESTION: 'Secrets must not be stored in git repositories'
+        YODA_TRANSLATE_API_ENDPOINT: 'https://api.funtranslations.com/translate/yoda.json'
+        TRANSLATE_ENDPOINT: '/translate'
+        YODA_TRANSLATE_API_KEY: ''
+        RATE_LIMITING_ENABLED: 'true'
