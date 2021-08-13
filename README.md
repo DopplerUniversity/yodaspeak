@@ -4,7 +4,7 @@
 
 A simple application to translate English into Yoda Speak.
 
-<a href="https://dashboard.doppler.com/workplace/template/import?template=https%3A%2F%2Fgithub.com%2FDopplerUniversity%2Fyodaspeak%2Fblob%2Fmaster%2Fdoppler-template.yaml"/><img src="https://raw.githubusercontent.com/DopplerHQ/app-config-templates/main/doppler-button.svg" alt="Import to Doppler" /></a>
+<a href="https://dashboard.doppler.com/workplace/template/import?template=https%3A%2F%2Fgithub.com%2FDopplerUniversity%2Fyodaspeak%2Fblob%2Fmaster%2Fdoppler-template.yaml"/><img src="https://raw.githubusercontent.com/DopplerUniversity/app-config-templates/main/doppler-button.svg" alt="Import to Doppler" /></a>
 
 It's designed to show how to use the [Doppler Universal Secrets Manager](https://doppler.com/) for securely and easily fetching app config and secrets for local and production environments using the Doppler CLI and either a system installation of Node.js, Docker, or Docker Compose (Kubernetes coming soon).
 
@@ -120,11 +120,11 @@ make create -f Heroku.Makefile TEAM=your-team APP=your-yodaspeak-app-name DOMAIN
 
 ## Using Repl.it
 
-[![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://repl.it/github/dopplerhq/yodaspeak)
+[![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://repl.it/github/doppleruniversity/yodaspeak)
 
 > NOTE: This is a work in progress and feedback is greatly appreciated!
 
-You can quickly and easily run [YodaSpeak on repl.it](https://repl.it/github/dopplerhq/yodaspeak) by following the below steps once your environment has booted up:
+You can quickly and easily run [YodaSpeak on repl.it](https://repl.it/github/doppleruniversity/yodaspeak) by following the below steps once your environment has booted up:
 
 1. Create a [Service Token](https://docs.doppler.com/docs/enclave-service-tokens) and expose it using the `DOPPLER_TOKEN` environment variable
 1. Install and configure all required dependencies by running:

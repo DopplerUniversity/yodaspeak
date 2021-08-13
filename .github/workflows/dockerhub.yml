@@ -27,7 +27,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: dopplerhq/yodaspeak:latest
+          tags: doppleruniversity/yodaspeak:latest
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

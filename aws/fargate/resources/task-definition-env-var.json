@@ -1,6 +1,6 @@
 [
   {
-    "image": "dopplerhq/yodaspeak",
+    "image": "doppleruniversity/yodaspeak",
     "cpu": ${cpu},
     "memory": ${memory},
     "name": "${app_name}",

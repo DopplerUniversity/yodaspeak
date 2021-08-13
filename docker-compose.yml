@@ -1,7 +1,7 @@
 services:
   web:
     build: .
-    image: dopplerhq/yodaspeak
+    image: doppleruniversity/yodaspeak
     container_name: yodaspeak
     init: true
     # Environment variables available to the `docker-compose up` created process are only passed

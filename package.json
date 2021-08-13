@@ -1,7 +1,7 @@
 {
   "name": "yodaspeak",
   "repository": {
-    "url": "github:DopplerHQ/yodaspeak"
+    "url": "github:DopplerUniversity/yodaspeak"
   },
   "version": "1.0.0",
   "engines": {
@@ -16,7 +16,7 @@
     "format": "prettier --write --loglevel error .",
     "build-static": "node ./src/build.js",
     "serve-static": "node ./src/static-server.js",
-    "docker-local": "DOPPLER_TOKEN=$(doppler configure get token --plain) DOPPLER_PROJECT=$(doppler configure get project --plain) DOPPLER_CONFIG=$(doppler configure get config --plain) bash -c 'docker container run --rm -it -e DOPPLER_TOKEN=$DOPPLER_TOKEN -e DOPPLER_PROJECT=$DOPPLER_PROJECT -e DOPPLER_CONFIG=$DOPPLER_CONFIG -p 8080:8080 dopplerhq/yodaspeak doppler run -- npm start'",
+    "docker-local": "DOPPLER_TOKEN=$(doppler configure get token --plain) DOPPLER_PROJECT=$(doppler configure get project --plain) DOPPLER_CONFIG=$(doppler configure get config --plain) bash -c 'docker container run --rm -it -e DOPPLER_TOKEN=$DOPPLER_TOKEN -e DOPPLER_PROJECT=$DOPPLER_PROJECT -e DOPPLER_CONFIG=$DOPPLER_CONFIG -p 8080:8080 doppleruniversity/yodaspeak doppler run -- npm start'",
     "docker-compose-local": "DOPPLER_TOKEN=$(doppler configure get token --plain) DOPPLER_PROJECT=$(doppler configure get project --plain) DOPPLER_CONFIG=$(doppler configure get config --plain) docker-compose -f docker-compose.yml -f docker-compose.dev-cli.yml up;docker-compose rm -fsv;"
   },
   "nodemonConfig": {

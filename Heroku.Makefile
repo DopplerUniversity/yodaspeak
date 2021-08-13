@@ -4,7 +4,7 @@
 
 # Used by Doppler for integration testing
 
-TEAM=dopplerhq
+TEAM=doppleruniversity
 APP=yodaspeak-production
 DOMAIN=yodaspeak.io
 

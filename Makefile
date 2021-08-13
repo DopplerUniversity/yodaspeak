@@ -31,7 +31,7 @@ devcontainer-env-file:
 ############
 
 CONTAINER_NAME=yodaspeak
-IMAGE_NAME=dopplerhq/yodaspeak
+IMAGE_NAME=doppleruniversity/yodaspeak
 
 docker-build:
 	docker image build -t $(IMAGE_NAME):latest .
@@ -48,7 +48,7 @@ docker:
 		--env-file <(doppler secrets download --no-file --format docker) \
 		-p 8080:8080 \
 		-p 8443:8443 \
-		dopplerhq/yodaspeak:latest
+		doppleruniversity/yodaspeak:latest
 
 # Uses the embedded Doppler CLI by overriding the default CMD (npm start) to be replaced by doppler run -- npm start
 # Usage: DOPPLER_TOKEN=dp.st.dev_ryan.XXXX make docker-doppler-cli
@@ -60,7 +60,7 @@ docker-doppler-cli:
 		-e DOPPLER_TOKEN=${DOPPLER_TOKEN} \
 		-p 8080:8080 \
 		-p 8443:8443 \
-		dopplerhq/yodaspeak:latest
+		doppleruniversity/yodaspeak:latest
 
 # Runs as root user in order to install dev packages
 docker-dev:
@@ -72,7 +72,7 @@ docker-dev:
 		-u root \
 		--env-file <(doppler secrets download --no-file --format docker) \
 		-p 8080:8080 \
-		dopplerhq/yodaspeak:latest
+		doppleruniversity/yodaspeak:latest
 
 docker-stop:
 	docker container rm -f yodaspeak
