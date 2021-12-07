@@ -73,3 +73,6 @@ typings/
 # .tfvars files
 *.tfvars
 .terraform
+
+# Other
+.DS_Store

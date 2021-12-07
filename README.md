@@ -4,13 +4,13 @@
 
 A simple application to translate English into Yoda Speak.
 
-<a href="https://dashboard.doppler.com/workplace/template/import?template=https%3A%2F%2Fgithub.com%2FDopplerUniversity%2Fyodaspeak%2Fblob%2Fmaster%2Fdoppler-template.yaml"/><img src="https://raw.githubusercontent.com/DopplerUniversity/app-config-templates/main/doppler-button.svg" alt="Import to Doppler" /></a>
+[![Import to Doppler](https://raw.githubusercontent.com/DopplerUniversity/app-config-templates/main/doppler-button.svg)](https://dashboard.doppler.com/workplace/template/import?template=https://github.com/DopplerUniversity/yodaspeak/blob/master/doppler-template.yaml)
 
 It's designed to show how to use the [Doppler Universal Secrets Manager](https://doppler.com/) for securely and easily fetching app config and secrets for local and production environments using the Doppler CLI and either a system installation of Node.js, Docker, or Docker Compose (Kubernetes coming soon).
 
 New to Doppler? [Check out our documentation](https://docs.doppler.com/docs) to get started with your own applications, or clone this repo and follow-along.
 
-> NOTE: The Yoda translation API used by the app is limited to 5 requests per hour unless you [register to purchase an API key](https://funtranslations.com/register). You can view the production site at [https://yodaspeak.io/](https://yodaspeak.io/)
+> NOTE: The Yoda translation API used by the app is limited to 5 requests per hour unless you [register to purchase an API key](https://funtranslations.com/register).
 
 ## Requirements
 
